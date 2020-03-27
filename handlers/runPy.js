@@ -6,12 +6,10 @@ async function calculate(req, res) {
   let data = req.body.data;
   console.log("data:", data);
 
-  // let result = await qrmodel(data) || null;
-  let result = data;
+  let result = await qrmodel(data) || null;
+  // let result = data;
 
-  res.send({
-    "result": result
-  });
+  console.log(result);
 };
 
 function qrmodel(data) {
