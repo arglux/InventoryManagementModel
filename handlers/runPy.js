@@ -6,7 +6,7 @@ async function calculate(req, res) {
   let args = req.body;
   console.log("args:", args);
 
-  let result = await qrmodel(args) || null;
+  let result = await qrmodel(args.A) || null;
 
   console.log(result);
   res.send({
@@ -23,12 +23,13 @@ function qrmodel(args) {
     let data = args;
 
     console.log("python-shell running...");
+    console.log("sending: ", 3)
 
     pyshell.send(JSON.stringify(data));
 
     pyshell.on('message', function (result) {
       result = JSON.parse(result);
-      console.log(result);
+      console.log("result:", result);
     });
 
     pyshell.on('stderr', function (stderr) {

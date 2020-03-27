@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <title>40.012 Manufacturing and Service Operations</title>
     <link rel="icon" type="image/x-icon" href="assets/icons/main.ico">
-    <link rel="stylesheet" href="https://use.typekit.net/rgd1rxa.css">
-    <link rel="stylesheet" type="text/css" href="assets/styles/main.css">
-    <script type="text/javascript" src="assets/scripts/main.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <script type="text/javascript" src="cripts/main.js" defer></script>
 </head>
 
 <body>
@@ -23,9 +22,10 @@
 
     <div>
         <h1>Step 2: Specify Parameters</h1>
-        <form action="/calculate">
-            <input placeholder="Holding Cost"/>
-            <input placeholder="Fixed Cost"/>
+        <form action="/calculate" method="POST">
+            <input placeholder="Holding Cost" name="A">
+            <input placeholder="Fixed Cost" name="F">
+            <input placeholder="Lead time" name"L">
             <button>Calculate</button>
         </form>
     </div>

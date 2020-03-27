@@ -6,7 +6,15 @@ class QRModel:
   def __init__(self, args):
     self.args = args;
   def calculate(self):
-  	return self.args;
+  	self.mu = 1
+  	self.std = 0.1
+  	self.p = 0.2
+
+  	self.Q = 200
+  	self.r = 50
+
+  	result = [self.mu, self.std, self.p, self.Q, self.r]
+  	return result;
 
 def read_in():
 	lines = sys.stdin.readlines()
