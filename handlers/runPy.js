@@ -4,14 +4,10 @@ let config = require("../config");
 
 async function calculate(req, res) {
   let data = req.body.data;
-  console.log(data)
+  console.log("data:", data);
 
-  try {
-    let result = await qrmodel(req.body.data);
-  } catch(e) {
-    let result = e;
-  }
-
+  // let result = await qrmodel(data) || null;
+  let result = data;
 
   res.send({
     "result": result
