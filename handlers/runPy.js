@@ -3,8 +3,15 @@ let path = require("path");
 let config = require("../config");
 
 async function calculate(req, res) {
-  let data = req.body;
-  let result = await qrmodel(data);
+  let data = req.body.data;
+  console.log(data)
+
+  try {
+    let result = await qrmodel(req.body.data);
+  } catch(e) {
+    let result = e;
+  }
+
 
   res.send({
     "result": result
@@ -21,6 +28,8 @@ function qrmodel(data) {
       "data" : data,
       "dummy" : [1, 1, 1]
     };
+
+    console.log("python-shell running...");
 
     pyshell.send(JSON.stringify(data));
 
@@ -52,3 +61,4 @@ function qrmodel(data) {
 
 // exports
 exports.calculate = calculate;
+exports.qrmodel = qrmodel;
