@@ -24,7 +24,7 @@ def main():
   result = qr.calculate()
 
   # return the result to runPy.js via stdOut
-  print(agent_scores)
+  print(result)
 
 if __name__ == '__main__':
   main()
