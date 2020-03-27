@@ -3,25 +3,24 @@ let path = require("path");
 let config = require("../config");
 
 async function calculate(req, res) {
-  let data = req.body.data;
-  console.log("data:", data);
+  let args = req.body;
+  console.log("args:", args);
 
-  let result = await qrmodel(data) || null;
-  // let result = data;
+  let result = await qrmodel(args) || null;
 
   console.log(result);
+  res.send({
+    "result": result
+  })
 };
 
-function qrmodel(data) {
+function qrmodel(args) {
   return new Promise((resolve, reject) => {
     let script = "qrmodel.py";
     let pyshell = new PythonShell(path.join(__dirname, script), config.options);
 
     let result;
-    let data = { // data here
-      "data" : data,
-      "dummy" : [1, 1, 1]
-    };
+    let data = args;
 
     console.log("python-shell running...");
 

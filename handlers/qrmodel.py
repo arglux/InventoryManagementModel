@@ -17,7 +17,6 @@ def main():
 	args = read_in()
 
 	# pass in to qr model and calculate result
-	args = [1, 2]
 	qr = QRModel(args)
 	result = qr.calculate()
 

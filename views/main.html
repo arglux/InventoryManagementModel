@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>50.003 Elements of Software Construction</title>
+    <title>40.012 Manufacturing and Service Operations</title>
     <link rel="icon" type="image/x-icon" href="assets/icons/main.ico">
     <link rel="stylesheet" href="https://use.typekit.net/rgd1rxa.css">
     <link rel="stylesheet" type="text/css" href="assets/styles/main.css">
@@ -11,24 +11,28 @@
 </head>
 
 <body>
-    <header>Please select your issue.</header>
-    <div class="problems">
-        <a href="#">General Enquiry</a>
-        <a href="#">Abdomen</a>
-        <a href="#">Back</a>
-        <a href="#">Chest</a>
-        <a href="#">Ear</a>
-        <a href="#">Extremeties</a>
-        <a href="#">Head</a>
-        <a href="#">Pelvis</a>
-        <a href="#">Rectum</a>
-        <a href="#">Skin</a>
-        <a href="#">Tooth</a>
+    <div>
+        <h1>Step 1: Specify Data</h1>
+        <form action="/render">
+            <input type="file" id="data" name="data">
+            <button>Submit</button>
+        </form>
     </div>
-    <div class="support_buttons">
-        <button class="button" id="chat" disabled>💬 Chat Support</button>
-        <button class="button" id="call" disabled >Call Support 📞</button>
+
+    <hr/>
+
+    <div>
+        <h1>Step 2: Specify Parameters</h1>
+        <form action="/calculate">
+            <input placeholder="Holding Cost"/>
+            <input placeholder="Fixed Cost"/>
+            <button>Calculate</button>
+        </form>
     </div>
+
+    <hr/>
+
+
 </body>
 
 </html>
