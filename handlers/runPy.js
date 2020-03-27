@@ -2,25 +2,31 @@ let {PythonShell} = require('python-shell');
 let path = require("path");
 let config = require("../config");
 
-function calculate(req, res) {
+async function calculate(req, res) {
+  let data = req.body;
+  let result = await qrmodel(data);
+
+  res.send({
+    "result": result
+  });
+};
+
+function qrmodel(data) {
   return new Promise((resolve, reject) => {
     let script = "qrmodel.py";
     let pyshell = new PythonShell(path.join(__dirname, script), config.options);
 
-    let agentIds = Object.keys(this.agentTable);
-    let agentPriority;
-
-    let data = {
-      "agent_ids" : agentIds,
-      "tags" : [1, 1, 1]          // input tags here
+    let result;
+    let data = { // data here
+      "data" : data,
+      "dummy" : [1, 1, 1]
     };
 
     pyshell.send(JSON.stringify(data));
 
-    pyshell.on('message', function (message) {
-      let agentScores = JSON.parse(message);
-      agentPriority = agentScores.prioritySort(agentIds);
-      console.log(agentPriority);
+    pyshell.on('message', function (result) {
+      result = JSON.parse(result);
+      console.log(result);
     });
 
     pyshell.on('stderr', function (stderr) {
@@ -29,16 +35,17 @@ function calculate(req, res) {
 
     pyshell.end(function (err, code, signal) {
       if (err) {
-        let message = `Failure! A match cannot be found, returning null.`;
+        let message = `Failure! Pyshell terminating!`;
         console.log(message);
-        reject(err)
+        reject(err);
       };
+      console.log(`${script} finished`);
       console.log('The exit code was: ' + code);
       console.log('The exit signal was: ' + signal);
-      console.log(`${script} finished`);
-      message = `Success! Matches has been generated for User: ${userId}.`;
+
+      message = `Success! Result: ${result}.`;
       console.log(message);
-      resolve(agentPriority);
+      resolve(result);
     });
   });
 };
