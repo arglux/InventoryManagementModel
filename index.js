@@ -16,7 +16,7 @@ app.use(express.json({ limit: '1mb' }));
 
 // routes and handlers
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/views/main.html")));
-app.get('/calculate', runPy.calculate);
+app.post('/calculate', runPy.calculate);
 
 
 let PORT = process.env.PORT || 8080
