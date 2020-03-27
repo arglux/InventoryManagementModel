@@ -4,7 +4,7 @@ let dotenv = require('dotenv').config();
 let path = require("path");
 
 // modules
-
+let runPy = require('./handlers/runPy');
 
 // instantiate express app
 let app = new express();
@@ -15,7 +15,8 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json({ limit: '1mb' }));
 
 // routes and handlers
-app.get('/', async(req, res) => res.sendFile(path.join(__dirname + "/views/main.html")));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/views/main.html")));
+app.get('/calculate', runPy.calculate);
 
 
 let PORT = process.env.PORT || 8080
