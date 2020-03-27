@@ -1,0 +1,27 @@
+{
+  "name": "inventorymanagementmodel",
+  "version": "1.0.0",
+  "description": "Interactive application to predict demand and manage inventory using Compound Demand Distribution and (Q, r) Model. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heavensward-argentlux/InventoryManagementModel.git"
+  },
+  "keywords": [
+    "qr-model"
+  ],
+  "author": "calvin yusnoveri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heavensward-argentlux/InventoryManagementModel/issues"
+  },
+  "homepage": "https://github.com/heavensward-argentlux/InventoryManagementModel#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
