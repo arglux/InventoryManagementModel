@@ -6,17 +6,18 @@
     <title>40.012 Manufacturing and Service Operations</title>
     <link rel="icon" type="image/x-icon" href="assets/icons/main.ico">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <script type="text/javascript" src="cripts/main.js" defer></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+    <script type="text/javascript" src="scripts/main.js" defer></script>
 </head>
 
 <body>
     <div>
         <h1>Step 1: Specify Data</h1>
-        <form action="/render">
-            <input type="file" id="data" name="data">
-            <button>Submit</button>
-        </form>
+        <input type="file" id="data" name="data">
+        <input type="button" id="extract" value="extract" onclick="extract()" />
     </div>
+    <div id="dataTable" style="overflow-y:auto;"></div>
 
     <hr/>
 
