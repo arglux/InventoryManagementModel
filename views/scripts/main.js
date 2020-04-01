@@ -86,7 +86,7 @@ function parse(data) {
 let X = [];
 let Y = [];
 
-function test() {
+function report() {
 	console.log('success');
 }
 
@@ -109,6 +109,6 @@ parameters.onsubmit = async(e) => {
 
   let result = await response.json();
 
-  alert(result.hello);
+  alert(JSON.stringify(result));
 }
 

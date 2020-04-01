@@ -15,10 +15,10 @@ def main():
 
 	# pack result into dictionary for json dumping
 	result = {}
-	result["A"] = A
-	result["F"] = F
-	result["X"] = X
-	result["Y"] = Y
+	result["mu"] = 50
+	result["std"] = 5
+	result["Q"] = 100
+	result["r"] = 200
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
