@@ -4,7 +4,7 @@ let dotenv = require('dotenv').config();
 let path = require("path");
 
 // modules
-let runPy = require('./handlers/runPy');
+let qrmodel = require('./handlers/qrmodel');
 
 // instantiate express app
 let app = new express();
@@ -16,7 +16,7 @@ app.use(express.json({ limit: '1mb' }));
 
 // routes and handlers
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/views/main.html")));
-app.post('/calculate', runPy.calculate);
+app.post('/calculate', qrmodel.calculate);
 
 
 let PORT = process.env.PORT || 8080
