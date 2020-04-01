@@ -1,17 +1,28 @@
 let PyShell = require("./pyshell");
+let formidable = require('formidable');
 
 let pyshell = new PyShell.PyShell();
 
 async function calculate(req, res) {
-	let script = "main.py"
-	let data = {
-		"hello": "world"
-	}
+	let form = formidable({ multiples: true });
+	let script = "main.py";
 
-	let result = await pyshell.run(script, data)
-	console.log(JSON.parse(result))
+	form.parse(req, async (err, fields) => {
+    if (err) return;
 
-	res.send(JSON.parse(result))
+    let data = {
+    	A: fields.A,
+    	F: fields.F,
+    	X: fields.X.split(","),
+    	Y: fields.Y.split(","),
+    };
+    console.log(data);
+
+		let result = await pyshell.run(script, data);
+		console.log(JSON.parse(result));
+
+		res.send(JSON.parse(result));
+  });
 }
 
 exports.calculate = calculate;

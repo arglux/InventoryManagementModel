@@ -80,8 +80,35 @@ function parse(data) {
   var dataTable = document.getElementById("dataTable");
   dataTable.innerHTML = "";
   dataTable.appendChild(table);
-  console.log(X, Y)
+  console.log(X, Y);
 };
 
 let X = [];
 let Y = [];
+
+function test() {
+	console.log('success');
+}
+
+parameters.onsubmit = async(e) => {
+	e.preventDefault();
+
+	if (X.length == 0 || Y.length == 0) {
+		alert("Excel file must be submitted AND extracted!");
+		return
+	}
+
+	let body = new FormData(parameters);
+	body.append("X", X);
+	body.append("Y", Y);
+
+  let response = await fetch('/calculate', {
+    method: 'POST',
+    body: body
+  });
+
+  let result = await response.json();
+
+  alert(result.hello);
+}
+
