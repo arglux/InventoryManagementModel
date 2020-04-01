@@ -4,7 +4,8 @@
   "description": "Interactive application to predict demand and manage inventory using Compound Demand Distribution and (Q, r) Model. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
