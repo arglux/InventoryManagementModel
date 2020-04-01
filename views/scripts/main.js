@@ -86,8 +86,31 @@ function parse(data) {
 let X = [];
 let Y = [];
 
-function report() {
-	console.log('success');
+function report(result) {
+	let header = document.createElement("h1");
+	header.innerHTML = "Results:";
+
+	let mu = document.createElement("p");
+	mu.innerHTML = `μ	: ${result.mu}\n`;
+
+	let std = document.createElement("p");
+	std.innerHTML = `σ	: ${result.std}\n`;
+
+	let kyu = document.createElement("p");
+	kyu.innerHTML = `Q	: ${result.Q}\n`;
+
+	let r = document.createElement("p");
+	r.innerHTML = `r	: ${result.r}\n`;
+
+	let line = document.createElement("hr");
+
+	let resultReport = document.getElementById("resultReport");
+	resultReport.appendChild(header);
+	resultReport.appendChild(mu);
+	resultReport.appendChild(std);
+	resultReport.appendChild(kyu);
+	resultReport.appendChild(r);
+	resultReport.appendChild(line);
 }
 
 parameters.onsubmit = async(e) => {
@@ -109,6 +132,7 @@ parameters.onsubmit = async(e) => {
 
   let result = await response.json();
 
+  report(result);
   alert(JSON.stringify(result));
 }
 
