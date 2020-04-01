@@ -8,7 +8,7 @@ async function calculate(req, res) {
 		"hello": "world"
 	}
 
-	let result = pyshell.run(script, data)
+	let result = await pyshell.run(script, data)
 	console.log(result)
 
 	res.send({
