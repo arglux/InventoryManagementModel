@@ -1,6 +1,5 @@
 let {PythonShell} = require('python-shell');
 let path = require("path");
-let config = require("../config");
 
 async function calculate(req, res) {
   let args = req.body;
@@ -17,38 +16,16 @@ async function calculate(req, res) {
 function qrmodel(args) {
   return new Promise((resolve, reject) => {
     let script = "qrmodel.py";
-    let pyshell = new PythonShell(path.join(__dirname, script), config.options);
+    let options = {
+      mode: 'text',
+      args: ['my First Argument', 'My Second Argument', '--option=123']
+    }
 
-    let result;
-    let data = args;
-
-    console.log("python-shell running...");
-    console.log("sending: ", 3)
-
-    pyshell.send(JSON.stringify(data));
-
-    pyshell.on('message', function (result) {
-      result = JSON.parse(result);
-      console.log("result:", result);
-    });
-
-    pyshell.on('stderr', function (stderr) {
-      console.log(stderr);
-    });
-
-    pyshell.end(function (err, code, signal) {
-      if (err) {
-        let message = `Failure! Pyshell terminating!`;
-        console.log(message);
-        reject(err);
-      };
-      console.log(`${script} finished`);
-      console.log('The exit code was: ' + code);
-      console.log('The exit signal was: ' + signal);
-
-      message = `Success! Result: ${result}.`;
-      console.log(message);
-      resolve(result);
+    PythonShell.run(script, options, function (err, results) {
+    if (err) throw reject(err);
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+    resolve(results)
     });
   });
 };

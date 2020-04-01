@@ -16,13 +16,9 @@ class QRModel:
   	result = [self.mu, self.std, self.p, self.Q, self.r]
   	return result;
 
-def read_in():
-	lines = sys.stdin.readlines()
-	return json.loads(lines[0])
-
 def main():
-	# get arguments
-	args = read_in()
+	args = sys.argv
+	print(args)
 
 	# pass in to qr model and calculate result
 	qr = QRModel(args)
