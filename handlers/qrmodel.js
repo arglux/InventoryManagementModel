@@ -9,11 +9,9 @@ async function calculate(req, res) {
 	}
 
 	let result = await pyshell.run(script, data)
-	console.log(result)
+	console.log(JSON.parse(result))
 
-	res.send({
-		"result": result
-	})
+	res.send(JSON.parse(result))
 }
 
 exports.calculate = calculate;
