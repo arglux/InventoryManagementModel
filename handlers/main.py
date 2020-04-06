@@ -1,6 +1,9 @@
 import sys
 import json
 import numpy as np
+import methods as m
+from distribution import Demand, pdf
+from model import Cost, QRModel
 
 def main():
 	lines = read_stdin()
@@ -13,12 +16,29 @@ def main():
 
 	# pass args to qr model and calculate result
 
+	# get parameters
+	params, perr, bic = m.fit_distribution(pdf, X, Y)
+	mu, sig, p = params
+
+	# for normal distribution
+	# from scipy.stats import norm
+	# normpdf = lambda x, mu, sig: norm.cdf(np.round(x)+0.5, mu, sig) - norm.cdf(np.round(x)-0.5, mu, sig)
+	# params, perr, bic = m.fit_distribution(normpdf, X, Y)
+	# mu, sig = params
+
+	# calculate result
+	demand = Demand(mu, sig, p)
+	cost = Cost(A, h, b, 0)
+	model = QRModel(demand, cost)
+
+	Q, r, total_cost = model.numeric_optimize_backorder()
+
 	# pack result into dictionary for json dumping
 	result = {}
-	result["mu"] = 50
-	result["std"] = 5
-	result["Q"] = 100
-	result["r"] = 200
+	result["mu"] = mu
+	result["std"] = sig
+	result["Q"] = Q
+	result["r"] = r
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
