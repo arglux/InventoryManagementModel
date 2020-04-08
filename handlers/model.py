@@ -64,37 +64,37 @@ class QRModel:
         return infsum(lambda y: (y - x) * self.demand.pdf(y), x)
     
     def expected_backorder(self, Q=None, r=None):
-        return np.sum(np.fromfunction(lambda x: self.backorder(np.round(r) + x), (np.round(Q).astype("int")+1,)))/Q if Q and r else self.expected_backorder(self.Q, self.r)
+        return np.sum(np.fromfunction(lambda x: self.backorder(np.round(r) + x), (np.round(Q).astype("int")+1,)))/Q if Q or r else self.expected_backorder(self.Q, self.r)
 
     def expected_inventory(self, Q=None, r=None):
-        return Q/2 + r - self.demand.mean + self.expected_backorder(Q, r) if Q and r else self.expected_inventory(self.Q, self.r)
+        return Q/2 + r - self.demand.mean + self.expected_backorder(Q, r) if Q or r else self.expected_inventory(self.Q, self.r)
 
     def fill_rate(self, Q=None, r=None):
-        return 1 - (self.backorder(r) - self.backorder(r + Q))/Q if Q and r else self.fill_rate(self.Q, self.r)
+        return 1 - (self.backorder(r) - self.backorder(r + Q))/Q if Q or r else self.fill_rate(self.Q, self.r)
 
     def expected_stockout(self, Q=None, r=None):
-        return self.demand.mean * (1 - self.fill_rate(Q, r)) if Q and r else self.expected_stockout(self.Q, self.r)
+        return self.demand.mean * (1 - self.fill_rate(Q, r)) if Q or r else self.expected_stockout(self.Q, self.r)
 
     def fixed_cost(self, Q=None, r=None):
-        return self.costs.A * self.demand.mean / Q if Q and r else self.fixed_cost(self.Q, self.r)
+        return self.costs.A * self.demand.mean / Q if Q or r else self.fixed_cost(self.Q, self.r)
 
     def holding_cost(self, Q=None, r=None):
-        return self.costs.h * self.expected_inventory(Q, r) if Q and r else self.holding_cost(self.Q, self.r)
+        return self.costs.h * self.expected_inventory(Q, r) if Q or r else self.holding_cost(self.Q, self.r)
 
     def backorder_cost(self, Q=None, r=None):
-        return self.costs.b * self.expected_backorder(Q, r) if Q and r else self.backorder_cost(self.Q, self.r)
+        return self.costs.b * self.expected_backorder(Q, r) if Q or r else self.backorder_cost(self.Q, self.r)
 
     def stockout_cost(self, Q=None, r=None):
-        return self.costs.k * self.demand.mean * (1 - self.expected_stockout(Q, r)) if Q and r else self.stockout_cost(self.Q, self.r)
+        return self.costs.k * self.demand.mean * (1 - self.expected_stockout(Q, r)) if Q or r else self.stockout_cost(self.Q, self.r)
 
     def expected_cost_backorder(self, Q=None, r=None):
-        if not (Q and r): return self.expected_cost_backorder(self.Q, self.r)
+        if not (Q or r): return self.expected_cost_backorder(self.Q, self.r)
         B = self.expected_backorder(Q, r)
         I = Q/2 + r - self.demand.mean + B
         return self.costs.A * self.demand.mean/Q + self.costs.h * I + self.costs.b * B
 
     def expected_cost_stockout(self, Q=None, r=None):
-        if not (Q and r): return self.expected_cost_stockout(self.Q, self.r)
+        if not (Q or r): return self.expected_cost_stockout(self.Q, self.r)
         B = self.expected_backorder(Q, r)
         I = Q/2 + r - self.demand.mean + B
         stockout_cost = self.costs.k * (self.demand.mean * (self.backorder(r) - self.backorder(r+Q))/Q)
