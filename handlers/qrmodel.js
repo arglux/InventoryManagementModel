@@ -11,13 +11,13 @@ async function calculate(req, res) {
     if (err) return;
 
     let data = {
-    	A: fields.fixedCost,
-    	h: fields.holdingCost,
-    	b: fields.backorderCost,
-    	X: fields.X.split(","),
-    	Y: fields.Y.split(","),
-    };
-    console.log(data);
+			A: fields.fixedCost,
+			h: fields.holdingCost,
+			b: fields.backorderCost,
+			X: fields.X.split(","),
+			Y: fields.Y.split(","),
+		};
+		console.log(data);
 
 		let result = await pyshell.run(script, data);
 		console.log(JSON.parse(result));

@@ -16,34 +16,34 @@ def main():
 	Y = lines['Y']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
-	# pass args to qr model and calculate result
-	A, h, b = 1, 1, 1
+	# # pass args to qr model and calculate result
+	# A, h, b = 1, 1, 1
 
-	# get parameters
-	y = np.bincount(Y)
-	x = np.arange(np.max(Y) + 1)
-	params, perr, bic = m.fit_distribution(pdf, x, y)
-	mu, sig, p = params
+	# # get parameters
+	# y = np.bincount(Y)
+	# x = np.arange(np.max(Y) + 1)
+	# params, perr, bic = m.fit_distribution(pdf, x, y)
+	# mu, sig, p = params
 
-	# for normal distribution
-	# from scipy.stats import norm
-	# normpdf = lambda x, mu, sig: norm.cdf(np.round(x)+0.5, mu, sig) - norm.cdf(np.round(x)-0.5, mu, sig)
-	# params, perr, bic = m.fit_distribution(normpdf, X, Y)
-	# mu, sig = params
+	# # for normal distribution
+	# # from scipy.stats import norm
+	# # normpdf = lambda x, mu, sig: norm.cdf(np.round(x)+0.5, mu, sig) - norm.cdf(np.round(x)-0.5, mu, sig)
+	# # params, perr, bic = m.fit_distribution(normpdf, X, Y)
+	# # mu, sig = params
 
-	# calculate result
-	demand = Demand(mu, sig, p)
-	cost = Cost(A, h, b, 0)
-	model = QRModel(demand, cost)
+	# # calculate result
+	# demand = Demand(mu, sig, p)
+	# cost = Cost(A, h, b, 0)
+	# model = QRModel(demand, cost)
 
-	Q, r, total_cost = model.numeric_optimize_backorder()
+	# Q, r, total_cost = model.numeric_optimize_backorder()
 
 	# dummy value
-	# mu = 1
-	# sig = 2
-	# Q = 3
-	# r = 4
-	# total_cost = 5
+	mu = 1
+	sig = 2
+	Q = 3
+	r = 4
+	total_cost = 5
 
 	# pack result into dictionary for json dumping
 	result = {}
