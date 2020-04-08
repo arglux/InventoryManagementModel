@@ -85,10 +85,12 @@ function parse(data) {
 
 let X = [];
 let Y = [];
+let counter = 0;
 
 function report(result) {
+	counter += 1;
 	let header = document.createElement("h1");
-	header.innerHTML = "Results:";
+	header.innerHTML = `Results ${counter}:`;
 
 	let mu = document.createElement("p");
 	mu.innerHTML = `Mean (μ)	: ${result.mu}\n`;
@@ -137,6 +139,7 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
-  alert(JSON.stringify(result));
+  alert("Successfully Processed!")
+  // alert(JSON.stringify(result));
 }
 

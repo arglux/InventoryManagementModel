@@ -11,14 +11,12 @@ def main():
 	# parse args
 	A = int(lines['A'])
 	h = int(lines['h'])
-	# b = lines['b']
+	b = int(lines['b'])
 	X = lines['X']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
-	# # pass args to qr model and calculate result
+	# pass args to qr model and calculate result
 	b = 1
-
-	# # get parameters
 	y = np.bincount(Y)
 	x = np.arange(np.max(Y) + 1)
 	params, perr, bic = m.fit_distribution(pdf, x, y)

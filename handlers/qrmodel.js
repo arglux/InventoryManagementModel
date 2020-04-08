@@ -9,7 +9,7 @@ async function calculate(req, res) {
 
 	form.parse(req, async (err, fields) => {
     if (err) return;
-
+    console.log(fields)
     let data = {
 			A: fields.fixedCost,
 			h: fields.holdingCost,
