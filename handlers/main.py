@@ -14,12 +14,15 @@ def main():
 	# b = lines['b']
 	X = lines['X']
 	Y = lines['Y']
+	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
 	# pass args to qr model and calculate result
-	# A, h, b = 1, 1, 1
+	A, h, b = 1, 1, 1
 
 	# get parameters
-	params, perr, bic = m.fit_distribution(pdf, X, Y)
+	y = np.bincount(Y)
+	x = np.arange(np.max(Y) + 1)
+	params, perr, bic = m.fit_distribution(pdf, x, y)
 	mu, sig, p = params
 
 	# for normal distribution
@@ -35,12 +38,20 @@ def main():
 
 	Q, r, total_cost = model.numeric_optimize_backorder()
 
+	# dummy value
+	# mu = 1
+	# sig = 2
+	# Q = 3
+	# r = 4
+	# total_cost = 5
+
 	# pack result into dictionary for json dumping
 	result = {}
 	result["mu"] = mu
 	result["std"] = sig
 	result["Q"] = Q
 	result["r"] = r
+	result["c"] = total_cost
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))

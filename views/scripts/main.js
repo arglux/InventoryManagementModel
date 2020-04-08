@@ -102,6 +102,9 @@ function report(result) {
 	let r = document.createElement("p");
 	r.innerHTML = `r	: ${result.r}\n`;
 
+	let C = document.createElement("p");
+	c.innerHTML = `c	: ${result.c}\n`;
+
 	let line = document.createElement("hr");
 
 	let resultReport = document.getElementById("resultReport");
