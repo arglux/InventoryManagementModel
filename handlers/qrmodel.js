@@ -11,8 +11,9 @@ async function calculate(req, res) {
     if (err) return;
 
     let data = {
-    	A: fields.A,
-    	F: fields.F,
+    	A: fields.fixedCost,
+    	h: fields.holdingCost,
+    	b: fields.backorderCost,
     	X: fields.X.split(","),
     	Y: fields.Y.split(","),
     };

@@ -10,12 +10,13 @@ def main():
 
 	# parse args
 	A = lines['A']
-	F = lines['F']
+	h = lines['h']
+	# b = lines['b']
 	X = lines['X']
 	Y = lines['Y']
 
 	# pass args to qr model and calculate result
-	A, h, b = 1, 1, 1
+	# A, h, b = 1, 1, 1
 
 	# get parameters
 	params, perr, bic = m.fit_distribution(pdf, X, Y)
