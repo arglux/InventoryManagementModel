@@ -91,19 +91,19 @@ function report(result) {
 	header.innerHTML = "Results:";
 
 	let mu = document.createElement("p");
-	mu.innerHTML = `μ	: ${result.mu}\n`;
+	mu.innerHTML = `Mean (μ)	: ${result.mu}\n`;
 
 	let std = document.createElement("p");
-	std.innerHTML = `σ	: ${result.std}\n`;
+	std.innerHTML = `Standard Dev (σ)	: ${result.std}\n`;
 
 	let kyu = document.createElement("p");
-	kyu.innerHTML = `Q	: ${result.Q}\n`;
+	kyu.innerHTML = `Order Qty (Q)	: ${result.Q}\n`;
 
 	let r = document.createElement("p");
-	r.innerHTML = `r	: ${result.r}\n`;
+	r.innerHTML = `Reorder Point (r)	: ${result.r}\n`;
 
 	let c = document.createElement("p");
-	c.innerHTML = `c	: ${result.c}\n`;
+	c.innerHTML = `Total Cost (c)	: ${result.c}\n`;
 
 	let line = document.createElement("hr");
 
@@ -113,6 +113,7 @@ function report(result) {
 	resultReport.appendChild(std);
 	resultReport.appendChild(kyu);
 	resultReport.appendChild(r);
+	resultReport.appendChild(c);
 	resultReport.appendChild(line);
 }
 
