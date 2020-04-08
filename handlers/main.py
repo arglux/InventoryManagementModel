@@ -20,8 +20,8 @@ def main():
 	# A, h, b = 1, 1, 1
 
 	# # get parameters
-	# y = np.bincount(Y)
-	# x = np.arange(np.max(Y) + 1)
+	y = np.bincount(Y)
+	x = np.arange(np.max(Y) + 1)
 	# params, perr, bic = m.fit_distribution(pdf, x, y)
 	# mu, sig, p = params
 
@@ -52,6 +52,8 @@ def main():
 	result["Q"] = Q
 	result["r"] = r
 	result["c"] = total_cost
+	result["y"] = y.tolist()
+	result["x"] = x.tolist()
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
