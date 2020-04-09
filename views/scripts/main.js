@@ -32,7 +32,7 @@ function extract() {
   } else {
   	alert("Please upload a valid Excel file.");
   }
-};
+}
 
 function parse(data) {
   // Read the Excel File data.
@@ -81,7 +81,8 @@ function parse(data) {
   dataTable.innerHTML = "";
   dataTable.appendChild(table);
   console.log(X, Y);
-};
+    drawChart();
+}
 
 let X = [];
 let Y = [];
@@ -122,7 +123,7 @@ function report(result) {
 parameters.onsubmit = async(e) => {
 	e.preventDefault();
 
-	if (X.length == 0 || Y.length == 0) {
+	if (X.length === 0 || Y.length === 0) {
 		alert("Excel file must be submitted AND extracted!");
 		return
 	}
@@ -141,5 +142,46 @@ parameters.onsubmit = async(e) => {
   report(result);
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
+};
+
+
+/*************Chart Functions*************/
+
+const chart1 = document.getElementById("chart1");
+let data = {
+    labels: 0,
+    datasets: [
+        {
+            data: 0,
+            label: "Demand",
+            backgroundColor: "#007bff",
+            fill: false
+        },
+    ]
+};
+
+const barChart = new Chart(chart1, {
+    type: 'bar',
+    data: data
+});
+
+function drawChart() {
+    chart1.style.visibility="visible";
+    barChart.data={
+        labels: X,
+        datasets: [
+            {
+                data: Y,
+                label: "Demand",
+                backgroundColor: "#007bff",
+                fill: false
+            },
+        ]
+    };
+    barChart.update();
+}
+
+function hideChart() {
+    chart1.style.height="0";
 }
 

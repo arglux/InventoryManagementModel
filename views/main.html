@@ -4,37 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <title>40.012 Manufacturing and Service Operations</title>
-    <link rel="icon" type="image/x-icon" href="assets/icons/main.ico">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
     <script type="text/javascript" src="scripts/main.js" defer></script>
+    <script type="text/javascript" src="scripts/charts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <div>
-        <h1>Step 1: Specify Data</h1>
-        <input type="file" id="data" name="data">
-        <input type="button" id="extract" value="extract" onclick="extract()" />
+    <div class="container">
+        <div class="section">
+            <h1>Step 1: Upload and Process Data</h1>
+            <input type="file" class="data" id="data" name="data"/>
+            <label for="data" class="btn btn-outline-primary" id="file-name"><h4 id="file-name">Select Data</h4></label>
+            <button type="button" class="btn btn-outline-primary" id="extract" value="extract" onclick="extract()" >
+                <h4>Upload Data</h4>
+            </button>
+        </div>
+
+        <div id="dataTable" style="overflow-y:auto;"></div>
+
+        <canvas id="chart1"></canvas>
+<!--        <button type="button"class="btn btn-outline-primary" id="hideChart" value="hideChart" onclick="hideChart()">hide Chart</button>-->
+        <hr/>
+
+        <div>
+            <h1>Step 2: Specify Parameters</h1>
+            <form id="parameters">
+                <input placeholder="Backorder Cost ($)" name="backorderCost">
+                <input placeholder="Fixed Cost ($)" name="fixedCost">
+                <input placeholder="Holding Cost ($)" name="holdingCost">
+                <input type="submit">
+            </form>
+        </div>
+
+        <hr/>
+
+        <div id="resultReport"></div>
+
     </div>
-    <div id="dataTable" style="overflow-y:auto;"></div>
-
-    <hr/>
-
-    <div>
-        <h1>Step 2: Specify Parameters</h1>
-        <form id="parameters">
-            <input placeholder="Backorder Cost ($)" name="backorderCost">
-            <input placeholder="Fixed Cost ($)" name="fixedCost">
-            <input placeholder="Holding Cost ($)" name="holdingCost">
-            <input type="submit">
-        </form>
-    </div>
-
-    <hr/>
-
-    <div id="resultReport"></div>
-
 </body>
 
 </html>

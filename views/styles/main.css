@@ -1,0 +1,24 @@
+#chart1 {
+    width: 100%;
+    display: none;
+    height: 0;
+    transition: height 500ms;
+}
+
+.data {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.data + label {
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+h1 {
+    margin-bottom: 1rem !important;
+}
