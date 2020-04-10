@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
     <script type="text/javascript" src="scripts/main.js" defer></script>
-    <script type="text/javascript" src="scripts/charts.js"></script>
+    <script type="text/javascript" src="scripts/charts.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -16,34 +16,40 @@
 <body>
     <div class="container">
         <div class="section">
-            <h1>Step 1: Upload and Process Data</h1>
-            <input type="file" class="data" id="data" name="data"/>
-            <label for="data" class="btn btn-outline-primary" id="file-name"><h4 id="file-name">Select Data</h4></label>
-            <button type="button" class="btn btn-outline-primary" id="extract" value="extract" onclick="extract()" >
-                <h4>Upload Data</h4>
-            </button>
+            <h1>Inventory System Modelling - (Q,r) Model</h1>
         </div>
+        <div class="section-gray">
+            <h3>Step 1: Upload and Process Data</h3>
+            <input type="file" class="data" id="data" name="data"/>
+            <label for="data" class="btn btn-outline-primary"><span class="font-weight-bold" id="file-name">Select Data</span></label>
+            <button type="button" class="btn btn-outline-primary" id="extract" value="extract" onclick="extract()" >
+                <span class="font-weight-bold">Upload Data</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="hideChart" value="hideChart" onclick="hideChart()" >
+                <span class="font-weight-bold">Hide Chart</span>
+            </button>
+            <div id="chart-container">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+<!--        <div id="dataTable" style="overflow-y:auto;"></div>-->
+        <div class="section">
+            <h3>Step 2: Specify Parameters</h3>
+            <form class="form-group" id="parameters">
 
-        <div id="dataTable" style="overflow-y:auto;"></div>
-
-        <canvas id="chart1"></canvas>
-<!--        <button type="button"class="btn btn-outline-primary" id="hideChart" value="hideChart" onclick="hideChart()">hide Chart</button>-->
-        <hr/>
-
-        <div>
-            <h1>Step 2: Specify Parameters</h1>
-            <form id="parameters">
-                <input placeholder="Backorder Cost ($)" name="backorderCost">
-                <input placeholder="Fixed Cost ($)" name="fixedCost">
-                <input placeholder="Holding Cost ($)" name="holdingCost">
-                <input type="submit">
+                <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
+                <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
+                <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
+                <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
+                <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
+                <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
+                <button type="submit" class="btn btn-outline-primary"><span class="font-weight-bold">Process with Parameters</span></button>
             </form>
         </div>
-
-        <hr/>
-
-        <div id="resultReport"></div>
-
+        <div class="section-gray">
+            <h3>Step 3: View Generated Report</h3>
+            <div id="resultReport"></div>
+        </div>
     </div>
 </body>
 

@@ -77,11 +77,11 @@ function parse(data) {
     Y.push(excelRows[i].y);
   }
 
-  var dataTable = document.getElementById("dataTable");
-  dataTable.innerHTML = "";
-  dataTable.appendChild(table);
+  // var dataTable = document.getElementById("dataTable");
+  // dataTable.innerHTML = "";
+  // dataTable.appendChild(table);
   console.log(X, Y);
-    drawChart();
+  drawChart();
 }
 
 let X = [];
@@ -144,44 +144,4 @@ parameters.onsubmit = async(e) => {
   // alert(JSON.stringify(result));
 };
 
-
-/*************Chart Functions*************/
-
-const chart1 = document.getElementById("chart1");
-let data = {
-    labels: 0,
-    datasets: [
-        {
-            data: 0,
-            label: "Demand",
-            backgroundColor: "#007bff",
-            fill: false
-        },
-    ]
-};
-
-const barChart = new Chart(chart1, {
-    type: 'bar',
-    data: data
-});
-
-function drawChart() {
-    chart1.style.visibility="visible";
-    barChart.data={
-        labels: X,
-        datasets: [
-            {
-                data: Y,
-                label: "Demand",
-                backgroundColor: "#007bff",
-                fill: false
-            },
-        ]
-    };
-    barChart.update();
-}
-
-function hideChart() {
-    chart1.style.height="0";
-}
 

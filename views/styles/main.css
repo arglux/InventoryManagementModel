@@ -1,3 +1,18 @@
+/*Global*/
+h1,h3 {
+    margin-bottom: 1rem !important;
+}
+
+.section-gray{
+    background-color: #EEEEEE;
+    padding: 2rem;
+}
+
+.section{
+    padding: 2rem;
+}
+
+/*Specific*/
 #chart1 {
     width: 100%;
     display: none;
@@ -19,6 +34,9 @@
     margin-bottom: 0;
 }
 
-h1 {
-    margin-bottom: 1rem !important;
+
+#chart-container {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 500ms;
 }
