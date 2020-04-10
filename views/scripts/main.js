@@ -32,7 +32,7 @@ function extract() {
   } else {
   	alert("Please upload a valid Excel file.");
   }
-}
+};
 
 function parse(data) {
   // Read the Excel File data.
@@ -77,12 +77,11 @@ function parse(data) {
     Y.push(excelRows[i].y);
   }
 
-  // var dataTable = document.getElementById("dataTable");
-  // dataTable.innerHTML = "";
-  // dataTable.appendChild(table);
+  var dataTable = document.getElementById("dataTable");
+  dataTable.innerHTML = "";
+  dataTable.appendChild(table);
   console.log(X, Y);
-  drawChart();
-}
+};
 
 let X = [];
 let Y = [];
@@ -123,7 +122,7 @@ function report(result) {
 parameters.onsubmit = async(e) => {
 	e.preventDefault();
 
-	if (X.length === 0 || Y.length === 0) {
+	if (X.length == 0 || Y.length == 0) {
 		alert("Excel file must be submitted AND extracted!");
 		return
 	}
@@ -142,6 +141,5 @@ parameters.onsubmit = async(e) => {
   report(result);
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
-};
-
+}
 

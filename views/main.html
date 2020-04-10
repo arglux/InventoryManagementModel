@@ -32,11 +32,9 @@
                 <canvas id="chart1"></canvas>
             </div>
         </div>
-<!--        <div id="dataTable" style="overflow-y:auto;"></div>-->
         <div class="section">
             <h3>Step 2: Specify Parameters</h3>
             <form class="form-group" id="parameters">
-
                 <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
                 <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
                 <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
@@ -48,6 +46,7 @@
         </div>
         <div class="section-gray">
             <h3>Step 3: View Generated Report</h3>
+            <div id="dataTable" style="overflow-y:auto;"></div>
             <div id="resultReport"></div>
         </div>
     </div>
