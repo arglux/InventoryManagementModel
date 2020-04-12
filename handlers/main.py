@@ -16,7 +16,6 @@ def main():
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
 	# pass args to qr model and calculate result
-	b = 1
 	y = np.bincount(Y)
 	x = np.arange(np.max(Y) + 1)
 	params, perr, bic = m.fit_distribution(pdf, x, y)
@@ -36,6 +35,9 @@ def main():
 
 	# pack result into dictionary for json dumping
 	result = {}
+	result["A"] = A
+	result["h"] = h
+	result["b"] = b
 	result["mu"] = mu
 	result["std"] = sig
 	result["Q"] = Q
