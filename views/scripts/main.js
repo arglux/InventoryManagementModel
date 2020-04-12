@@ -46,6 +46,11 @@ function parse(data) {
   // Read all rows from First Sheet into an JSON array.
   var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
 
+  // reinitialize X and Y
+  X = [];
+  Y = [];
+  var table;
+
   // Create a HTML Table element.
   var table = document.createElement("table");
   table.border = "1";
@@ -55,11 +60,11 @@ function parse(data) {
 
   // Add the header cells.
   var headerCell = document.createElement("TH");
-  headerCell.innerHTML = "x";
+  headerCell.innerHTML = "X (Dates)";
   row.appendChild(headerCell);
 
   headerCell = document.createElement("TH");
-  headerCell.innerHTML = "y";
+  headerCell.innerHTML = "Y (Demand)";
   row.appendChild(headerCell);
 
   // Add the data rows from Excel file.
