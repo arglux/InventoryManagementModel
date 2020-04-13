@@ -60,11 +60,11 @@ function parse(data) {
 
   // Add the header cells.
   var headerCell = document.createElement("TH");
-  headerCell.innerHTML = "X (Dates)";
+  headerCell.innerHTML = " X (Dates) ";
   row.appendChild(headerCell);
 
   headerCell = document.createElement("TH");
-  headerCell.innerHTML = "Y (Demand)";
+  headerCell.innerHTML = " Y (Demand) ";
   row.appendChild(headerCell);
 
   // Add the data rows from Excel file.
@@ -86,6 +86,7 @@ function parse(data) {
   dataTable.innerHTML = "";
   dataTable.appendChild(table);
   console.log(X, Y);
+  drawChart();
 };
 
 let X = [];
