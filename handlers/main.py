@@ -2,6 +2,7 @@ import sys
 import json
 import numpy as np
 import methods as m
+import performance as p
 from distribution import Demand, pdf
 from model import Cost, QRModel
 
@@ -12,6 +13,7 @@ def main():
 	A = int(lines['A'])
 	h = int(lines['h'])
 	b = int(lines['b'])
+	i0 = int(lines['i0'])
 	X = lines['X']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 

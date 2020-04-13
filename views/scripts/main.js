@@ -95,7 +95,7 @@ let counter = 0;
 
 function report(result) {
 	counter += 1;
-	let header = document.createElement("h1");
+	let header = document.createElement("h3");
 	header.innerHTML = `Results ${counter}:`;
 
 	let mu = document.createElement("p");
