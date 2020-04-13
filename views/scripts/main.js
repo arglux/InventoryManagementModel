@@ -52,7 +52,7 @@ function parse(data) {
   var table;
 
   // Create a HTML Table element.
-  var table = document.createElement("table");
+  table = document.getElementById("table");
   table.border = "1";
 
   // Add the header row.
@@ -60,11 +60,11 @@ function parse(data) {
 
   // Add the header cells.
   var headerCell = document.createElement("TH");
-  headerCell.innerHTML = " X (Dates) ";
+  headerCell.innerHTML = "X (Dates)";
   row.appendChild(headerCell);
 
   headerCell = document.createElement("TH");
-  headerCell.innerHTML = " Y (Demand) ";
+  headerCell.innerHTML = "Y (Demand)";
   row.appendChild(headerCell);
 
   // Add the data rows from Excel file.
@@ -91,6 +91,8 @@ function parse(data) {
 
 let X = [];
 let Y = [];
+let I;
+let B;
 let counter = 0;
 
 function report(result) {
@@ -125,6 +127,28 @@ function report(result) {
 	resultReport.appendChild(line);
 }
 
+function appendColumn(header, result) {
+  // Add the header row.
+  let table = document.getElementById("table")
+  var row = table.rows[0];
+
+  // Add the header cells.
+  var headerCell = document.createElement("TH");
+  headerCell.innerHTML = header;
+  row.appendChild(headerCell);
+
+  // Add the data rows from Excel file.
+  for (var i = 0; i < result.length; i++) {
+    // Add the data row.
+    var row = table.rows[i+1];
+
+    // Add the data cells.
+    var cell = row.insertCell(-1);
+    cell.innerHTML = result[i];
+  }
+
+}
+
 parameters.onsubmit = async(e) => {
 	e.preventDefault();
 
@@ -145,6 +169,12 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
+  appendColumn(`Inventory Data ${counter}`, result.I);
+  appendColumn(`Backorder Data ${counter}`, result.B);
+
+  I = result.I;
+  B = result.B;
+
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
 }
