@@ -2,6 +2,7 @@ import sys
 import json
 import numpy as np
 import methods as m
+import performance as perf
 from distribution import Demand, pdf
 from model import Cost, QRModel
 
@@ -12,6 +13,9 @@ def main():
 	A = int(lines['A'])
 	h = int(lines['h'])
 	b = int(lines['b'])
+	i0 = int(lines['i0'])
+	b0 = 0
+	L = int(lines['L'])
 	X = lines['X']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
@@ -32,6 +36,7 @@ def main():
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
 	Q, r, total_cost = model.numeric_optimize_backorder()
+	I, B = perf.simulate(Y, i0, b0, Q, r, L)
 
 	# pack result into dictionary for json dumping
 	result = {}
@@ -43,8 +48,11 @@ def main():
 	result["Q"] = Q
 	result["r"] = r
 	result["c"] = total_cost
+	result["L"] = L
 	result["y"] = y.tolist()
 	result["x"] = x.tolist()
+	result["I"] = I
+	result["B"] = B
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
