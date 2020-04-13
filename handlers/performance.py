@@ -54,7 +54,7 @@ def test():
 	for i in range(2):
 		print(i)
 	print('lala')
-	print(simulate(Y, 10, 10, 0, 500))
+	print(simulate(Y, 10, 10, 0, 500, 2))
 
 if __name__ == '__main__':
 	test()

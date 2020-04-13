@@ -14,6 +14,7 @@ def main():
 	h = int(lines['h'])
 	b = int(lines['b'])
 	i0 = int(lines['i0'])
+	L = int(lines['L'])
 	X = lines['X']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
 
@@ -45,6 +46,7 @@ def main():
 	result["Q"] = Q
 	result["r"] = r
 	result["c"] = total_cost
+	result["L"] = L
 	result["y"] = y.tolist()
 	result["x"] = x.tolist()
 

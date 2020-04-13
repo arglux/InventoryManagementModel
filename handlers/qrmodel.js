@@ -15,6 +15,7 @@ async function calculate(req, res) {
 			h: fields.holdingCost,
 			b: fields.backorderCost,
 			i0: fields.startingInventory,
+			L: fields.leadTime,
 			X: fields.X.split(","),
 			Y: fields.Y.split(","),
 		};
