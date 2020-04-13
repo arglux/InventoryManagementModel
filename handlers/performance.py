@@ -16,7 +16,7 @@ def simulate(Y, i0, b0, Q, r, L):
 	reorder_at = lambda ending_inventory: True if ending_inventory <= r else False
 	order_otw = -1	# counts the arrival of reordered stock, if not -1, CANNOT reorder any more
 	order_comes = lambda order_otw: True if order_otw == 0 else False
-	q = lambda order_comes: Q if order_comes else 0
+	q = lambda order_comes: int(round(Q, 0)) if order_comes else 0
 
 	for idx in range(length):
 		# advance order_otw by 1 unit if otw, if order has arrived, +Q and set order_otw to -1
@@ -26,14 +26,14 @@ def simulate(Y, i0, b0, Q, r, L):
 			i = getEndingInventory(Y[idx], i0)
 			b = getBackorder(Y[idx], i0, b0)
 			i, b = addQ(i, b, q(order_comes(order_otw)))
-			inventory.append(i)
-			backorder.append(b)
+			inventory.append(int(i))
+			backorder.append(int(b))
 		else: # for demand Y index=1 to n, use previous value of ending_inventory and current Y
 			i = getEndingInventory(Y[idx], inventory[idx-1])
 			b = getBackorder(Y[idx], inventory[idx-1], backorder[idx-1])
 			i, b = addQ(i, b, q(order_comes(order_otw)))
-			inventory.append(i)
-			backorder.append(b)
+			inventory.append(int(i))
+			backorder.append(int(b))
 
 		# checks if ending_inventory hits reorder quantity => reorder and start counting
 		if reorder_at(i) and order_otw == -1: order_otw = (order_otw + 1) % L
@@ -60,7 +60,7 @@ def addQ(i, b, q):
 			b = 0
 		return i, b
 	else:
-		i + q
+		i = i + q
 		return i, b
 
 
