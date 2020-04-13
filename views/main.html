@@ -15,22 +15,29 @@
 
 <body>
     <div class="container">
+
+
         <div class="section">
             <h1>Inventory System Modelling - (Q,r) Model</h1>
         </div>
         <div class="section-gray">
             <h3>Step 1: Upload and Process Data</h3>
             <input type="file" class="data" id="data" name="data"/>
-            <label for="data" class="btn btn-outline-primary"><span class="font-weight-bold" id="file-name">Select Data</span></label>
-            <button type="button" class="btn btn-outline-primary" id="extract" value="extract" onclick="extract()" >
+            <label for="data" id="forData" class="btn btn-outline-primary"><span class="font-weight-bold" id="fileName">Select Data</span></label>
+            <button type="button" class="btn btn-outline-primary" id="extract" value="extract" onclick="extract()">
                 <span class="font-weight-bold">Upload Data</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="toggleChart" value="toggleChart" onclick="toggleChart()" >
+                <span class="font-weight-bold">Toggle Chart</span>
             </button>
             <button type="button" class="btn btn-outline-primary" id="hideChart" value="hideChart" onclick="hideChart()" >
                 <span class="font-weight-bold">Hide Chart</span>
             </button>
             <div id="chart-container">
                 <canvas id="chart1"></canvas>
+                <div id="chart2"></div>
             </div>
+
         </div>
         <div class="section">
             <h3>Step 2: Specify Parameters</h3>
@@ -46,7 +53,6 @@
         </div>
         <div class="section-gray">
             <h3>Step 3: View Generated Report</h3>
-            <div id="dataTable" style="overflow-y:auto;"></div>
             <div id="resultReport"></div>
         </div>
     </div>

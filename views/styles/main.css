@@ -15,9 +15,12 @@ h1,h3 {
 /*Specific*/
 #chart1 {
     width: 100%;
-    display: none;
     height: 0;
     transition: height 500ms;
+}
+
+#chart2 {
+    display: none;
 }
 
 .data {
@@ -39,4 +42,8 @@ h1,h3 {
     overflow: hidden;
     max-height: 0;
     transition: max-height 500ms;
+    margin-top: 16px;
 }
+
+
+

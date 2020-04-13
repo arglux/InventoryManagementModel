@@ -19,5 +19,5 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/views/main.html"
 app.post('/calculate', qrmodel.calculate);
 
 
-let PORT = process.env.PORT || 8080
+let PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Listening to port: ${PORT}...`));

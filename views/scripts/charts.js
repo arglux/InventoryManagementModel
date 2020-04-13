@@ -1,9 +1,16 @@
 window.onload = function () {
     const input = document.getElementById( 'data' );
-    const infoArea = document.getElementById( 'file-name' );
+    const fileName = document.getElementById( 'fileName' );
+    const forData = document.getElementById( 'forData' );
     input.addEventListener( 'change', function showFileName( event ) {
-        let fileName = event.srcElement.files[0].name;
-        infoArea.innerText = ''+ fileName;
+        if (event.target.files.length===0) {
+            fileName.innerText = "Select Data";
+            forData.className="btn btn-outline-primary";
+        } else {
+            fileName.innerText = ''+ event.target.files[0].name;
+            forData.className="btn btn-outline-success";
+        }
+
     })
 };
 
@@ -11,15 +18,14 @@ window.onload = function () {
 
 const chart1 = document.getElementById("chart1");
 const chartc = document.getElementById("chart-container");
-let tog=true;
+const chart2 = document.getElementById("chart2");
 let graph=false;
 let barChart = new Chart(chart1, {});
-barChart.destroy();
 
 function drawChart() {
     graph=true;
-    chart1.style.visibility="visible";
     chartc.style.maxHeight="1000px";
+    chart2.style.display="none";
     barChart.destroy();
     barChart = new Chart(chart1, {
         type: 'bar',
@@ -28,24 +34,38 @@ function drawChart() {
             datasets: [
                 {
                     data: Y,
-                    label: "Demand",
+                    label: "Monthly Demand",
                     backgroundColor: "#007bff",
                     fill: false
                 },
             ]
         }
     });
+
 }
 
-
-
-function hideChart() {
+let tog;
+function toggleChart() {
     if (graph) {
         tog=!tog;
         if (!tog) {
+            chart2.style.display="none";
+            chart1.style.display="block";
+        } else {
+            chart2.style.display="block";
+            chart1.style.display="none";
+        }
+    }
+}
+
+let hide=true;
+function hideChart() {
+    if (graph) {
+        hide=!hide;
+        if (!hide) {
             chartc.style.maxHeight="0"
         } else {
-            chartc.style.maxHeight="1000px"
+            chartc.style.maxHeight="9999px"
         }
     }
 }

@@ -49,23 +49,25 @@ function parse(data) {
   // reinitialize X and Y
   X = [];
   Y = [];
-  var table;
 
   // Create a HTML Table element.
   var table = document.createElement("table");
-  table.border = "1";
 
-  // Add the header row.
-  var row = table.insertRow(-1);
+  //table header
+    var thead=document.createElement("thead");
+    table.appendChild(thead);
+  // // Add the header row.
+  // var row = table.insertRow(-1);
 
   // Add the header cells.
   var headerCell = document.createElement("TH");
-  headerCell.innerHTML = "X (Dates)";
-  row.appendChild(headerCell);
+  headerCell.innerHTML = "X (Month)";
+  thead.appendChild(headerCell);
 
   headerCell = document.createElement("TH");
   headerCell.innerHTML = "Y (Demand)";
-  row.appendChild(headerCell);
+  thead.appendChild(headerCell);
+
 
   // Add the data rows from Excel file.
   for (var i = 0; i < excelRows.length; i++) {
@@ -82,11 +84,13 @@ function parse(data) {
     Y.push(excelRows[i].y);
   }
 
-  var dataTable = document.getElementById("dataTable");
-  dataTable.innerHTML = "";
-  dataTable.appendChild(table);
+  let chart2 = document.getElementById("chart2");
+  table.className="table table-hover table-sm";
+  chart2.innerHTML = "";
+  chart2.appendChild(table);
   console.log(X, Y);
-};
+  drawChart();
+}
 
 let X = [];
 let Y = [];
@@ -124,6 +128,7 @@ function report(result) {
 	resultReport.appendChild(line);
 }
 
+const parameters=document.getElementById("parameters");
 parameters.onsubmit = async(e) => {
 	e.preventDefault();
 
@@ -146,5 +151,5 @@ parameters.onsubmit = async(e) => {
   report(result);
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
-}
+};
 
