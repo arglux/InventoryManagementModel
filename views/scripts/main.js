@@ -115,15 +115,25 @@ function parse(data) {
 
 let X = [];
 let Y = [];
+
 let Q = [];
 let I = [];
 let B = [];
 let Q_optimized;
 let I_optimized;
 let B_optimized;
+
+let Qc;
+let Ic;
+let Bc;
+let Qc_optimized;
+let Ic_optimized;
+let Bc_optimized;
+
 let counter = 0;
 
 function report(result) {
+	// append variable report
 	counter += 1;
 	let header = document.createElement("h3");
 	header.innerHTML = `Results ${counter}:`;
@@ -157,6 +167,35 @@ function report(result) {
 	resultReport.appendChild(c);
 	resultReport.appendChild(f);
 	resultReport.appendChild(line);
+
+	//////////////////////////////////////////////
+
+  // // append cost data (column) report
+  // appendColumn(`Qc (Opt Order Cost) Result ${counter}`, result.Qc);
+  // appendColumn(`Ic (Opt Inventory Cost) Result ${counter}`, result.Ic);
+  // appendColumn(`Bc (Opt Backorder Cost) Result ${counter}`, result.Bc);
+
+  // Qc = result.Qc;
+  // Ic = result.Ic;
+  // Bc = result.Bc;
+
+	// append data (column) report
+  appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
+  appendColumn(`I* (Opt Inventory Qty) Result ${counter}`, result.I_optimized);
+  appendColumn(`B* (Opt Backorder Qty) Result ${counter}`, result.B_optimized);
+
+  Q_optimized = result.Q_optimized;
+  I_optimized = result.I_optimized;
+  B_optimized = result.B_optimized;
+
+  // appendColumn(`Qc* (Opt Order Cost) Result ${counter}`, result.Qc_optimized);
+  // appendColumn(`Ic* (Opt Inventory Cost) Result ${counter}`, result.Ic_optimized);
+  // appendColumn(`Bc* (Opt Backorder Cost) Result ${counter}`, result.Bc_optimized);
+
+  // Qc_optimized = result.Qc_optimized;
+  // Ic_optimized = result.Ic_optimized;
+  // Bc_optimized = result.Bc_optimized;
+
 }
 
 function appendColumn(header, result) {
@@ -204,14 +243,6 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
-  appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
-  appendColumn(`I* (Opt Inventory Qty) Result ${counter}`, result.I_optimized);
-  appendColumn(`B* (Opt Backorder Qty) Result ${counter}`, result.B_optimized);
-
-  I_optimized = result.I;
-  B_optimized = result.B;
-  Q_optimized = result.Q;
-
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
 }

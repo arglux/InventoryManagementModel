@@ -27,17 +27,17 @@ def simulate(Y, i0, b0, Q, r, L):
 		if idx == 0: # the first inventory & backorder uses i0 (starting/leftover inventory)
 			i = getEndingInventory(Y[idx], i0)
 			b = getBackorder(Y[idx], i0, b0)
-			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
+			i, b, o, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
-			ordered.append(int(q(order_comes(order_otw))))
+			ordered.append(int(o))
 		else: # for demand Y index=1 to n, use previous value of ending_inventory and current Y
 			i = getEndingInventory(Y[idx], inventory[idx-1])
 			b = getBackorder(Y[idx], inventory[idx-1], backorder[idx-1])
-			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
+			i, b, o, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
-			ordered.append(int(q(order_comes(order_otw))))
+			ordered.append(int(o))
 
 		# checks if ending_inventory hits reorder quantity => reorder and start counting
 		if reorder_at(i) and order_otw == -1: order_otw = (order_otw + 1) % L
@@ -56,29 +56,29 @@ def getBackorder(demand, starting_inv, previous_backorder):
 	else: return 0
 
 def addQ(i, b, q, order_otw):
-	if q == 0: return i, b, order_otw
+	if q == 0: return i, b, 0, order_otw
 	if b != 0:
 		b = b - q
 		if (b < 0):
 			i = i + -b
 			b = 0
-		return i, b, -1
+		return i, b, q, -1
 	else:
 		i = i + q
-		return i, b, -1
+		return i, b, q, -1
 
 
 #################################################################
 
 def simulateQIBCost(Q, Q_cost, I, I_cost, B, B_cost, fixed_cost):
-	Qc = getParameterCost(Q, Q_cost+fixed_cost)
+	Qc = getParameterCost(Q, Q_cost)
 	Ic = getParameterCost(I, I_cost)
 	Bc = getParameterCost(B, B_cost)
 	return Qc, Ic, Bc
 
 def getParameterCost(param, variable_cost):
 	cost = param * variable_cost
-	return cost
+	return cost.tolist()
 
 #################################################################
 

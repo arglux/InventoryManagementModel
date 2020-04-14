@@ -14,10 +14,14 @@ async function calculate(req, res) {
 			A: fields.fixedCost,
 			h: fields.holdingCost,
 			b: fields.backorderCost,
+			p: fields.orderingCost,
 			i0: fields.startingInventory,
 			L: fields.leadTime,
 			X: fields.X.split(","),
 			Y: fields.Y.split(","),
+			Q: fields.Q.split(","),
+			I: fields.I.split(","),
+			B: fields.B.split(","),
 		};
 		console.log(data);
 

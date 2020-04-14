@@ -13,6 +13,7 @@ def main():
 	A = int(lines['A'])
 	h = int(lines['h'])
 	b = int(lines['b'])
+	p = int(lines['p'])
 	i0 = int(lines['i0'])
 	b0 = 0
 	L = int(lines['L'])
@@ -44,6 +45,13 @@ def main():
 	kyu, r, total_cost = model.numeric_optimize_backorder()
 	I_optimized, B_optimized, Q_optimized, f = perf.simulate(Y, i0, b0, kyu, r, L)
 
+	Q_opt = np.asarray(Q_optimized, dtype=np.int64)
+	I_opt = np.asarray(I_optimized, dtype=np.int64)
+	B_opt = np.asarray(B_optimized, dtype=np.int64)
+	# get cost data for original and optimized QIB params
+	Qc, Ic, Bc = perf.simulateQIBCost(Q, p, I, h, B, b, A)
+	Qc_optimized, Ic_optimized, Bc_optimized = perf.simulateQIBCost(Q_opt, p, I_opt, h, B_opt, b, A)
+
 	# pack result into dictionary for json dumping
 	result = {}
 	result["A"] = A
@@ -63,6 +71,13 @@ def main():
 	result["Q_optimized"] = Q_optimized
 	result["I_optimized"] = I_optimized
 	result["B_optimized"] = B_optimized
+
+	result["Qc"] = Qc
+	result["Ic"] = Ic
+	result["Bc"] = Bc
+	result["Qc_optimized"] = Qc_optimized
+	result["Ic_optimized"] = Ic_optimized
+	result["Bc_optimized"] = Bc_optimized
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
