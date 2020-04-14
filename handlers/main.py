@@ -13,7 +13,7 @@ def main():
 	A = int(lines['A'])
 	h = int(lines['h'])
 	b = int(lines['b'])
-	p = int(lines['p'])
+	P = int(lines['P'])
 	i0 = int(lines['i0'])
 	b0 = 0
 	L = int(lines['L'])
@@ -49,8 +49,8 @@ def main():
 	I_opt = np.asarray(I_optimized, dtype=np.int64)
 	B_opt = np.asarray(B_optimized, dtype=np.int64)
 	# get cost data for original and optimized QIB params
-	Qc, Ic, Bc = perf.simulateQIBCost(Q, p, I, h, B, b, A)
-	Qc_optimized, Ic_optimized, Bc_optimized = perf.simulateQIBCost(Q_opt, p, I_opt, h, B_opt, b, A)
+	Qc, Ic, Bc = perf.simulateQIBCost(Q, P, I, h, B, b, A)
+	Qc_optimized, Ic_optimized, Bc_optimized = perf.simulateQIBCost(Q_opt, P, I_opt, h, B_opt, b, A)
 
 	# pack result into dictionary for json dumping
 	result = {}
