@@ -38,25 +38,28 @@ def main():
 	# calculate result
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
-	Q, r, total_cost = model.numeric_optimize_backorder()
-	I, B, f = perf.simulate(Y, i0, b0, Q, r, L)
+	kyu, r, total_cost = model.numeric_optimize_backorder()
+	I, B, Q, f = perf.simulate(Y, i0, b0, kyu, r, L)
 
 	# pack result into dictionary for json dumping
 	result = {}
 	result["A"] = A
 	result["h"] = h
 	result["b"] = b
+	result["L"] = L
+
 	result["mu"] = mu
 	result["std"] = sig
-	result["Q"] = Q
+	result["kyu"] = kyu
 	result["r"] = r
 	result["c"] = total_cost
-	result["L"] = L
+	result["f"] = f
+
 	result["y"] = y.tolist()
 	result["x"] = x.tolist()
+	result["Q"] = Q
 	result["I"] = I
 	result["B"] = B
-	result["f"] = f
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))

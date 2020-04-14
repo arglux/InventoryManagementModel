@@ -6,11 +6,12 @@ from tqdm import tqdm
 
 def simulate(Y, i0, b0, Q, r, L):
 	'''
-	returns inventory and backorder simulated values as 2 lists, one for each
-	e.g. inventory = [12, 13, 0], backorder = [0, 0, 17]
+	returns inventory and backorder and ordered qty simulated values as 3 lists, one for each
+	e.g. inventory = [12, 13, 0], backorder = [0, 0, 17], ordered = [0, 0, 50]
 	'''
 	inventory = []
 	backorder = []
+	ordered = []
 	length = Y.size
 
 	reorder_at = lambda ending_inventory: True if ending_inventory <= r else False
@@ -29,17 +30,19 @@ def simulate(Y, i0, b0, Q, r, L):
 			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
+			ordered.append(int(q(order_comes(order_otw))))
 		else: # for demand Y index=1 to n, use previous value of ending_inventory and current Y
 			i = getEndingInventory(Y[idx], inventory[idx-1])
 			b = getBackorder(Y[idx], inventory[idx-1], backorder[idx-1])
 			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
+			ordered.append(int(q(order_comes(order_otw))))
 
 		# checks if ending_inventory hits reorder quantity => reorder and start counting
 		if reorder_at(i) and order_otw == -1: order_otw = (order_otw + 1) % L
 
-	return inventory, backorder, 100 * (sum(Y) - sum(backorder))/sum(Y)
+	return inventory, backorder, ordered, 100 * (sum(Y) - sum(backorder))/sum(Y)
 
 
 def getEndingInventory(demand, starting_inv):

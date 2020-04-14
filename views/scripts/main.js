@@ -118,6 +118,7 @@ let Y = [];
 let Q = [];
 let I = [];
 let B = [];
+let Q_optimized;
 let I_optimized;
 let B_optimized;
 let counter = 0;
@@ -134,7 +135,7 @@ function report(result) {
 	std.innerHTML = `Standard Dev (σ)	: ${result.std}\n`;
 
 	let kyu = document.createElement("p");
-	kyu.innerHTML = `Order Qty (Q)	: ${result.Q}\n`;
+	kyu.innerHTML = `Order Qty (Q)	: ${result.kyu}\n`;
 
 	let r = document.createElement("p");
 	r.innerHTML = `Reorder Point (r)	: ${result.r}\n`;
@@ -200,11 +201,13 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
-  appendColumn(`I* (Optimized Inventory Qty) ${counter}`, result.I);
-  appendColumn(`B* (Optimized Backorder Qty) ${counter}`, result.B);
+  appendColumn(`Q* (Optimized Order Qty) - Result ${counter}`, result.Q);
+  appendColumn(`I* (Optimized Inventory Qty) - Result ${counter}`, result.I);
+  appendColumn(`B* (Optimized Backorder Qty) - Result ${counter}`, result.B);
 
   I_optimized = result.I;
   B_optimized = result.B;
+  Q_optimized = result.Q;
 
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
