@@ -18,6 +18,9 @@ def main():
 	L = int(lines['L'])
 	X = lines['X']
 	Y = np.asarray(lines['Y'], dtype=np.int64) # must be np.array
+	Q = np.asarray(lines['Q'], dtype=np.int64)
+	I = np.asarray(lines['I'], dtype=np.int64)
+	B = np.asarray(lines['B'], dtype=np.int64)
 
 	# pass args to qr model and calculate result
 	y = np.bincount(Y)
@@ -39,7 +42,7 @@ def main():
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
 	kyu, r, total_cost = model.numeric_optimize_backorder()
-	I, B, Q, f = perf.simulate(Y, i0, b0, kyu, r, L)
+	I_optimized, B_optimized, Q_optimized, f = perf.simulate(Y, i0, b0, kyu, r, L)
 
 	# pack result into dictionary for json dumping
 	result = {}
@@ -57,9 +60,9 @@ def main():
 
 	result["y"] = y.tolist()
 	result["x"] = x.tolist()
-	result["Q"] = Q
-	result["I"] = I
-	result["B"] = B
+	result["Q_optimized"] = Q_optimized
+	result["I_optimized"] = I_optimized
+	result["B_optimized"] = B_optimized
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))

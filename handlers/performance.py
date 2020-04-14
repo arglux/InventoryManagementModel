@@ -68,6 +68,8 @@ def addQ(i, b, q, order_otw):
 		return i, b, -1
 
 
+
+
 def test1():
 	Y = np.array(['10', '10'], dtype=np.int64)
 	print(Y)

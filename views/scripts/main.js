@@ -192,6 +192,9 @@ parameters.onsubmit = async(e) => {
 	let body = new FormData(parameters);
 	body.append("X", X);
 	body.append("Y", Y);
+	body.append("Q", Q);
+	body.append("I", I);
+	body.append("B", I);
 
   let response = await fetch('/calculate', {
     method: 'POST',
@@ -201,9 +204,9 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
-  appendColumn(`Q* (Optimized Order Qty) - Result ${counter}`, result.Q);
-  appendColumn(`I* (Optimized Inventory Qty) - Result ${counter}`, result.I);
-  appendColumn(`B* (Optimized Backorder Qty) - Result ${counter}`, result.B);
+  appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
+  appendColumn(`I* (Opt Inventory Qty) Result ${counter}`, result.I_optimized);
+  appendColumn(`B* (Opt Backorder Qty) Result ${counter}`, result.B_optimized);
 
   I_optimized = result.I;
   B_optimized = result.B;
