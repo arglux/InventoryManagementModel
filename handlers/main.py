@@ -24,15 +24,10 @@ def main():
 	x = np.arange(np.max(Y) + 1)
 	params, perr, bic = m.fit_distribution(pdf, x, y)
 	mu, sig, p = params
-
 	demand = Demand(mu, sig, p)
 
-	# assume lead time is L
 	# extrapolate directly from sample
 	demand = m.extrapolate_sample(Y, L)
-
-	# extrapolate from compound dist
-	# demand = m.extrapolate(demand, L)
 
 	# for normal distribution
 	# from scipy.stats import norm
