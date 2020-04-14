@@ -24,6 +24,10 @@ def main():
 	x = np.arange(np.max(Y) + 1)
 	params, perr, bic = m.fit_distribution(pdf, x, y)
 	mu, sig, p = params
+	demand = Demand(mu, sig, p)
+
+	# extrapolate directly from sample
+	demand = m.extrapolate_sample(Y, L)
 
 	# for normal distribution
 	# from scipy.stats import norm
@@ -32,11 +36,10 @@ def main():
 	# mu, sig = params
 
 	# calculate result
-	demand = Demand(mu, sig, p)
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
 	Q, r, total_cost = model.numeric_optimize_backorder()
-	I, B = perf.simulate(Y, i0, b0, Q, r, L)
+	I, B, f = perf.simulate(Y, i0, b0, Q, r, L)
 
 	# pack result into dictionary for json dumping
 	result = {}
@@ -53,6 +56,7 @@ def main():
 	result["x"] = x.tolist()
 	result["I"] = I
 	result["B"] = B
+	result["f"] = f
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))

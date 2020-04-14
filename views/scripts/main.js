@@ -94,6 +94,8 @@ function parse(data) {
 
 let X = [];
 let Y = [];
+let I;
+let B;
 let counter = 0;
 
 function report(result) {
@@ -116,6 +118,9 @@ function report(result) {
 	let c = document.createElement("p");
 	c.innerHTML = `Total Cost (c)	: ${result.c}\n`;
 
+	let f = document.createElement("p");
+	f.innerHTML = `Fill Rate (f)	: ${result.f}%\n`;
+
 	let line = document.createElement("hr");
 
 	let resultReport = document.getElementById("resultReport");
@@ -125,9 +130,31 @@ function report(result) {
 	resultReport.appendChild(kyu);
 	resultReport.appendChild(r);
 	resultReport.appendChild(c);
+	resultReport.appendChild(f);
 	resultReport.appendChild(line);
 }
 
+function appendColumn(header, result) {
+  // Add the header row.
+  let table = document.getElementById("table")
+  var row = table.rows[0];
+
+  // Add the header cells.
+  var headerCell = document.createElement("TH");
+  headerCell.innerHTML = header;
+  row.appendChild(headerCell);
+
+  // Add the data rows from Excel file.
+  for (var i = 0; i < result.length; i++) {
+    // Add the data row.
+    var row = table.rows[i+1];
+
+    // Add the data cells.
+    var cell = row.insertCell(-1);
+    cell.innerHTML = result[i];
+  }
+
+}
 const parameters=document.getElementById("parameters");
 parameters.onsubmit = async(e) => {
 	e.preventDefault();
@@ -149,6 +176,12 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
+  appendColumn(`Inventory Data ${counter}`, result.I);
+  appendColumn(`Backorder Data ${counter}`, result.B);
+
+  I = result.I;
+  B = result.B;
+
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
 };

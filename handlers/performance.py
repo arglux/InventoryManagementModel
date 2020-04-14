@@ -20,25 +20,26 @@ def simulate(Y, i0, b0, Q, r, L):
 
 	for idx in range(length):
 		# advance order_otw by 1 unit if otw, if order has arrived, +Q and set order_otw to -1
-		if order_otw != -1: order_otw = (order_otw + 1) % L
+		if order_otw != -1:
+			order_otw = (order_otw + 1) % L
 
 		if idx == 0: # the first inventory & backorder uses i0 (starting/leftover inventory)
 			i = getEndingInventory(Y[idx], i0)
 			b = getBackorder(Y[idx], i0, b0)
-			i, b = addQ(i, b, q(order_comes(order_otw)))
+			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
 		else: # for demand Y index=1 to n, use previous value of ending_inventory and current Y
 			i = getEndingInventory(Y[idx], inventory[idx-1])
 			b = getBackorder(Y[idx], inventory[idx-1], backorder[idx-1])
-			i, b = addQ(i, b, q(order_comes(order_otw)))
+			i, b, order_otw = addQ(i, b, q(order_comes(order_otw)), order_otw)
 			inventory.append(int(i))
 			backorder.append(int(b))
 
 		# checks if ending_inventory hits reorder quantity => reorder and start counting
 		if reorder_at(i) and order_otw == -1: order_otw = (order_otw + 1) % L
 
-	return inventory, backorder
+	return inventory, backorder, 100 * (sum(Y) - sum(backorder))/sum(Y)
 
 
 def getEndingInventory(demand, starting_inv):
@@ -51,17 +52,17 @@ def getBackorder(demand, starting_inv, previous_backorder):
 	if backorder < 0: return -backorder
 	else: return 0
 
-def addQ(i, b, q):
-	if q == 0: return i, b
+def addQ(i, b, q, order_otw):
+	if q == 0: return i, b, order_otw
 	if b != 0:
 		b = b - q
 		if (b < 0):
 			i = i + -b
 			b = 0
-		return i, b
+		return i, b, -1
 	else:
 		i = i + q
-		return i, b
+		return i, b, -1
 
 
 def test1():

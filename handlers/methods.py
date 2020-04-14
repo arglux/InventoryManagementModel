@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import scipy.optimize as optimize
+from distribution import Demand
 from tqdm import tqdm
 
 # setter: a setter for the parameter.
