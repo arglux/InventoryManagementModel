@@ -67,6 +67,18 @@ function parse(data) {
   headerCell.innerHTML = "Y (Demand)";
   row.appendChild(headerCell);
 
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "Q (Raw Order Qty)";
+  row.appendChild(headerCell);
+
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "I (Raw Inventory Qty)";
+  row.appendChild(headerCell);
+
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "B (Raw Backorder Qty)";
+  row.appendChild(headerCell);
+
   // Add the data rows from Excel file.
   for (var i = 0; i < excelRows.length; i++) {
     // Add the data row.
@@ -80,6 +92,18 @@ function parse(data) {
     cell = row.insertCell(-1);
     cell.innerHTML = excelRows[i].y;
     Y.push(excelRows[i].y);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].Q;
+    Q.push(excelRows[i].Q);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].I;
+    I.push(excelRows[i].I);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].B;
+    B.push(excelRows[i].B);
   }
 
   var dataTable = document.getElementById("dataTable");
@@ -91,8 +115,11 @@ function parse(data) {
 
 let X = [];
 let Y = [];
-let I;
-let B;
+let Q = [];
+let I = [];
+let B = [];
+let I_optimized;
+let B_optimized;
 let counter = 0;
 
 function report(result) {
@@ -173,11 +200,11 @@ parameters.onsubmit = async(e) => {
   let result = await response.json();
 
   report(result);
-  appendColumn(`Inventory Data ${counter}`, result.I);
-  appendColumn(`Backorder Data ${counter}`, result.B);
+  appendColumn(`I* (Optimized Inventory Qty) ${counter}`, result.I);
+  appendColumn(`B* (Optimized Backorder Qty) ${counter}`, result.B);
 
-  I = result.I;
-  B = result.B;
+  I_optimized = result.I;
+  B_optimized = result.B;
 
   alert("Successfully Processed!")
   // alert(JSON.stringify(result));
