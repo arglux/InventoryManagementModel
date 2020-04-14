@@ -115,6 +115,9 @@ function report(result) {
 	let c = document.createElement("p");
 	c.innerHTML = `Total Cost (c)	: ${result.c}\n`;
 
+	let f = document.createElement("p");
+	f.innerHTML = `Fill Rate (f)	: ${result.f}%\n`;
+
 	let line = document.createElement("hr");
 
 	let resultReport = document.getElementById("resultReport");
@@ -124,6 +127,7 @@ function report(result) {
 	resultReport.appendChild(kyu);
 	resultReport.appendChild(r);
 	resultReport.appendChild(c);
+	resultReport.appendChild(f);
 	resultReport.appendChild(line);
 }
 

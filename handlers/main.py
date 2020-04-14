@@ -40,6 +40,7 @@ def main():
 	model = QRModel(demand, cost)
 	Q, r, total_cost = model.numeric_optimize_backorder()
 	I, B = perf.simulate(Y, i0, b0, Q, r, L)
+	f = int(99) # xu liang put fill rate here, out of 100%
 
 	# pack result into dictionary for json dumping
 	result = {}
@@ -56,6 +57,7 @@ def main():
 	result["x"] = x.tolist()
 	result["I"] = I
 	result["B"] = B
+	result["f"] = f
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))
