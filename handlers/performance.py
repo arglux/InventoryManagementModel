@@ -39,7 +39,7 @@ def simulate(Y, i0, b0, Q, r, L):
 		# checks if ending_inventory hits reorder quantity => reorder and start counting
 		if reorder_at(i) and order_otw == -1: order_otw = (order_otw + 1) % L
 
-	return inventory, backorder, 100 * sum(inventory)/(sum(backorder) + sum(inventory))
+	return inventory, backorder, 100 * (sum(Y) - sum(backorder))/sum(Y)
 
 
 def getEndingInventory(demand, starting_inv):
