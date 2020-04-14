@@ -68,7 +68,19 @@ def addQ(i, b, q, order_otw):
 		return i, b, -1
 
 
+#################################################################
 
+def simulateQIBCost(Q, Q_cost, I, I_cost, B, B_cost, fixed_cost):
+	Qc = getParameterCost(Q, Q_cost+fixed_cost)
+	Ic = getParameterCost(I, I_cost)
+	Bc = getParameterCost(B, B_cost)
+	return Qc, Ic, Bc
+
+def getParameterCost(param, variable_cost):
+	cost = param * variable_cost
+	return cost
+
+#################################################################
 
 def test1():
 	Y = np.array(['10', '10'], dtype=np.int64)
@@ -86,5 +98,11 @@ def test2():
 	print(Y)
 	print(simulate(Y, 10, 0, 40, 0, 2))
 
+def test3():
+	Y = np.array(['10', '10', '10', '10'], dtype=np.int64)
+	print(Y)
+	print(getParameterCost(Y, 22))
+	print(simulateQIBCost(Y, 22, Y, 33, Y, 11, 20))
+
 if __name__ == '__main__':
-	test2()
+	test3()
