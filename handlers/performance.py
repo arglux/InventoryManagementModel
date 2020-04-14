@@ -74,11 +74,20 @@ def simulateQIBCost(Q, Q_cost, I, I_cost, B, B_cost, fixed_cost):
 	Qc = getParameterCost(Q, Q_cost)
 	Ic = getParameterCost(I, I_cost)
 	Bc = getParameterCost(B, B_cost)
-	return Qc, Ic, Bc
+	Tc = getTotalSimulatedCost(Qc, Ic, Bc, fixed_cost)
+	return Qc, Ic, Bc, Tc
 
 def getParameterCost(param, variable_cost):
 	cost = param * variable_cost
 	return cost.tolist()
+
+def getTotalSimulatedCost(Qc, Ic, Bc, fixed_cost):
+	total_simulated_cost = []
+	for i in range(len(Qc)):
+		if Qc[i] > 0: total_simulated_cost.append(Qc[i] + Ic[i] + Bc[i] + fixed_cost)
+		else: total_simulated_cost.append(Ic[i] + Bc[i])
+
+	return total_simulated_cost
 
 #################################################################
 

@@ -49,8 +49,8 @@ def main():
 	I_opt = np.asarray(I_optimized, dtype=np.int64)
 	B_opt = np.asarray(B_optimized, dtype=np.int64)
 	# get cost data for original and optimized QIB params
-	Qc, Ic, Bc = perf.simulateQIBCost(Q, P, I, h, B, b, A)
-	Qc_optimized, Ic_optimized, Bc_optimized = perf.simulateQIBCost(Q_opt, P, I_opt, h, B_opt, b, A)
+	Qc, Ic, Bc, Tc = perf.simulateQIBCost(Q, P, I, h, B, b, A)
+	Qc_optimized, Ic_optimized, Bc_optimized, Tc_optimized = perf.simulateQIBCost(Q_opt, P, I_opt, h, B_opt, b, A)
 
 	# pack result into dictionary for json dumping
 	result = {}
@@ -75,9 +75,11 @@ def main():
 	result["Qc"] = Qc
 	result["Ic"] = Ic
 	result["Bc"] = Bc
+	result["Tc"] = Tc
 	result["Qc_optimized"] = Qc_optimized
 	result["Ic_optimized"] = Ic_optimized
 	result["Bc_optimized"] = Bc_optimized
+	result["Tc_optimized"] = Tc_optimized
 
 	# return the result to runPy.js via stdOut
 	print(json.dumps(result))

@@ -126,9 +126,11 @@ let B_optimized;
 let Qc;
 let Ic;
 let Bc;
+let Tc;
 let Qc_optimized;
 let Ic_optimized;
 let Bc_optimized;
+let Tc_optimized;
 
 let counter = 0;
 
@@ -171,13 +173,15 @@ function report(result) {
 	//////////////////////////////////////////////
 
   // append cost data (column) report
-  appendColumn(`Qc (Opt Order Cost) Result ${counter}`, result.Qc);
-  appendColumn(`Ic (Opt Inventory Cost) Result ${counter}`, result.Ic);
-  appendColumn(`Bc (Opt Backorder Cost) Result ${counter}`, result.Bc);
+  appendColumn(`Qc (Order Cost) Result ${counter}`, result.Qc);
+  appendColumn(`Ic (Inventory Cost) Result ${counter}`, result.Ic);
+  appendColumn(`Bc (Backorder Cost) Result ${counter}`, result.Bc);
+  appendColumn(`Tc (Total Cost) Result ${counter}`, result.Tc);
 
   Qc = result.Qc;
   Ic = result.Ic;
   Bc = result.Bc;
+  Tc = result.Tc;
 
 	// append data (column) report
   appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
@@ -188,13 +192,15 @@ function report(result) {
   I_optimized = result.I_optimized;
   B_optimized = result.B_optimized;
 
-  // appendColumn(`Qc* (Opt Order Cost) Result ${counter}`, result.Qc_optimized);
-  // appendColumn(`Ic* (Opt Inventory Cost) Result ${counter}`, result.Ic_optimized);
-  // appendColumn(`Bc* (Opt Backorder Cost) Result ${counter}`, result.Bc_optimized);
+  appendColumn(`Qc* (Opt Order Cost) Result ${counter}`, result.Qc_optimized);
+  appendColumn(`Ic* (Opt Inventory Cost) Result ${counter}`, result.Ic_optimized);
+  appendColumn(`Bc* (Opt Backorder Cost) Result ${counter}`, result.Bc_optimized);
+  appendColumn(`Tc* (Opt Total Cost) Result ${counter}`, result.Tc_optimized);
 
-  // Qc_optimized = result.Qc_optimized;
-  // Ic_optimized = result.Ic_optimized;
-  // Bc_optimized = result.Bc_optimized;
+  Qc_optimized = result.Qc_optimized;
+  Ic_optimized = result.Ic_optimized;
+  Bc_optimized = result.Bc_optimized;
+  Tc_optimized = result.Tc_optimized;
 
 }
 

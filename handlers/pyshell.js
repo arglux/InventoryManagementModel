@@ -20,6 +20,7 @@ function PyShell() {
       pyshell.send(JSON.stringify(args));
 
       pyshell.on('message', function (message) {
+      	console.log(message);
       	result = message;
       });
 
