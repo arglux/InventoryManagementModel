@@ -25,6 +25,15 @@ def main():
 	params, perr, bic = m.fit_distribution(pdf, x, y)
 	mu, sig, p = params
 
+	demand = Demand(mu, sig, p)
+
+	# assume lead time is L
+	# extrapolate directly from sample
+	demand = m.extrapolate_sample(Y, L)
+
+	# extrapolate from compound dist
+	# demand = m.extrapolate(demand, L)
+
 	# for normal distribution
 	# from scipy.stats import norm
 	# normpdf = lambda x, mu, sig: norm.cdf(np.round(x)+0.5, mu, sig) - norm.cdf(np.round(x)-0.5, mu, sig)
@@ -32,7 +41,6 @@ def main():
 	# mu, sig = params
 
 	# calculate result
-	demand = Demand(mu, sig, p)
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
 	Q, r, total_cost = model.numeric_optimize_backorder()
