@@ -111,7 +111,13 @@ function parse(data) {
   dataTable.appendChild(table);
   console.log(X, Y);
   drawChart();
+
+  fill("startingInventory", 61)
 };
+
+function fill(id, value):
+	var elem = document.getElementById(value)
+	elem.innerHTML = value
 
 let X = [];
 let Y = [];
@@ -170,14 +176,14 @@ function report(result) {
 
 	//////////////////////////////////////////////
 
-  // // append cost data (column) report
-  // appendColumn(`Qc (Opt Order Cost) Result ${counter}`, result.Qc);
-  // appendColumn(`Ic (Opt Inventory Cost) Result ${counter}`, result.Ic);
-  // appendColumn(`Bc (Opt Backorder Cost) Result ${counter}`, result.Bc);
+  // append cost data (column) report
+  appendColumn(`Qc (Opt Order Cost) Result ${counter}`, result.Qc);
+  appendColumn(`Ic (Opt Inventory Cost) Result ${counter}`, result.Ic);
+  appendColumn(`Bc (Opt Backorder Cost) Result ${counter}`, result.Bc);
 
-  // Qc = result.Qc;
-  // Ic = result.Ic;
-  // Bc = result.Bc;
+  Qc = result.Qc;
+  Ic = result.Ic;
+  Bc = result.Bc;
 
 	// append data (column) report
   appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
@@ -233,7 +239,7 @@ parameters.onsubmit = async(e) => {
 	body.append("Y", Y);
 	body.append("Q", Q);
 	body.append("I", I);
-	body.append("B", I);
+	body.append("B", B);
 
   let response = await fetch('/calculate', {
     method: 'POST',
