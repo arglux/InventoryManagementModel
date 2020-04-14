@@ -111,13 +111,7 @@ function parse(data) {
   dataTable.appendChild(table);
   console.log(X, Y);
   drawChart();
-
-  fill("startingInventory", 61)
 };
-
-function fill(id, value):
-	var elem = document.getElementById(value)
-	elem.innerHTML = value
 
 let X = [];
 let Y = [];
