@@ -47,7 +47,7 @@ class SimulationModel:
 		self.data = {"inventory":[], "demand":deepcopy(demand), "orders":[], "backorders":[], "fixed_cost":[], "holding_cost":[], "backorder_cost":[], "fill_rate":0}
 
 	def run(self, verbose=False):
-		while self.day < len(self.demand):
+		while self.day <= len(self.demand):
 			self.iterate(verbose=verbose)
 		self.data["fill_rate"] = self.satisfied/sum(self.demand)
 		return self.fixed_cost, self.holding_cost, self.backorder_cost, self.data
