@@ -127,10 +127,12 @@ let Qc;
 let Ic;
 let Bc;
 let Tc;
+let cum_Tc;
 let Qc_optimized;
 let Ic_optimized;
 let Bc_optimized;
 let Tc_optimized;
+let cum_Tc_optimized;
 
 let counter = 0;
 
@@ -172,11 +174,18 @@ function report(result) {
 
 	//////////////////////////////////////////////
 
+	// calculate cumulative
+	cum_Tc = getCumulative(result.Tc);
+	cum_Tc_optimized = getCumulative(result.Tc_optimized);
+
+	//////////////////////////////////////////////
+
   // append cost data (column) report
   appendColumn(`Qc (Order Cost) Result ${counter}`, result.Qc);
   appendColumn(`Ic (Inventory Cost) Result ${counter}`, result.Ic);
   appendColumn(`Bc (Backorder Cost) Result ${counter}`, result.Bc);
   appendColumn(`Tc (Total Cost) Result ${counter}`, result.Tc);
+  appendColumn(`Cumulative Total Cost Result ${counter}`, cum_Tc);
 
   Qc = result.Qc;
   Ic = result.Ic;
@@ -196,6 +205,7 @@ function report(result) {
   appendColumn(`Ic* (Opt Inventory Cost) Result ${counter}`, result.Ic_optimized);
   appendColumn(`Bc* (Opt Backorder Cost) Result ${counter}`, result.Bc_optimized);
   appendColumn(`Tc* (Opt Total Cost) Result ${counter}`, result.Tc_optimized);
+  appendColumn(`Cumulative Opt Total Cost Result ${counter}`, cum_Tc_optimized);
 
   Qc_optimized = result.Qc_optimized;
   Ic_optimized = result.Ic_optimized;
@@ -224,6 +234,15 @@ function appendColumn(header, result) {
     cell.innerHTML = result[i];
   }
 
+}
+
+function getCumulative(cost_list) {
+	cumulative_cost = [];
+	for (var i = 0; i < cost_list.length; i++) {
+		if (i == 0) cumulative_cost.push(parseFloat(cost_list[i]));
+		else cumulative_cost.push(parseFloat(cumulative_cost[i-1]) + parseFloat(cost_list[i]));
+	}
+	return cumulative_cost
 }
 
 parameters.onsubmit = async(e) => {
