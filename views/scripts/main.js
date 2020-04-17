@@ -183,7 +183,7 @@ function report(result) {
   Bc = result.Bc;
   Tc = result.Tc;
 
-	// append data (column) report
+	// append optimized data (column) report
   appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
   appendColumn(`I* (Opt Inventory Qty) Result ${counter}`, result.I_optimized);
   appendColumn(`B* (Opt Backorder Qty) Result ${counter}`, result.B_optimized);
@@ -241,15 +241,11 @@ parameters.onsubmit = async(e) => {
 	body.append("I", I);
 	body.append("B", B);
 
-	try {
-	  let response = await fetch('/calculate', {
-	    method: 'POST',
-	    body: body
-	  });
-	} catch(e) {
-		console.log(e);
-		alert("Sorry, data was too long! This server can only handle 30s latency!");
-	}
+
+  let response = await fetch('/calculate', {
+    method: 'POST',
+    body: body
+  });
 
 
   let result = await response.json();
