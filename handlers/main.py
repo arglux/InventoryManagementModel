@@ -3,6 +3,7 @@ import json
 import numpy as np
 import methods as m
 import performance as perf
+import simulation as sim
 from distribution import Demand, pdf
 from model import Cost, QRModel
 
@@ -43,7 +44,17 @@ def main():
 	cost = Cost(A, h, b, 0)
 	model = QRModel(demand, cost)
 	kyu, r, total_cost = model.numeric_optimize_backorder()
-	I_optimized, B_optimized, Q_optimized, f = perf.simulate(Y, i0, b0, kyu, r, L)
+
+	qr_model = sim.SimulationModel(Y, sim.Cost(A, h, b), sim.QRStrategy(kyu, r), i0, lead_time=L)
+	_, _, _, result = qr_model.run()
+	I_optimized = result["inventory"]
+	B_optimized = result["backorders"]
+	Q_optimized = result["orders"] 
+	f = result["fill_rate"] * 100
+	# Qc_optimized = result["fixed_cost"]
+	# Ic_optimized = result["holding_cost"]
+	# Bc_optimized = result["backorder_cost"]
+	# Tc_optimized = np.array(Qc_optimized) + np.array(Ic_optimized) + np.array(Bc_optimized)
 
 	Q_opt = np.asarray(Q_optimized, dtype=np.int64)
 	I_opt = np.asarray(I_optimized, dtype=np.int64)
