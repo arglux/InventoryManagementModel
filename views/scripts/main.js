@@ -141,19 +141,19 @@ function report(result) {
 	header.innerHTML = `Results ${counter}:`;
 
 	let mu = document.createElement("p");
-	mu.innerHTML = `Mean (μ)	: ${result.mu}\n`;
+	mu.innerHTML = `Mean (μ)	: ${result.mu}\n unit(s)`;
 
 	let std = document.createElement("p");
-	std.innerHTML = `Standard Dev (σ)	: ${result.std}\n`;
+	std.innerHTML = `Standard Dev (σ)	: ${result.std}\n unit(s)`;
 
 	let kyu = document.createElement("p");
-	kyu.innerHTML = `Order Qty (Q)	: ${result.kyu}\n`;
+	kyu.innerHTML = `Order Qty (Q)	: ${result.kyu}\n unit(s)`;
 
 	let r = document.createElement("p");
-	r.innerHTML = `Reorder Point (r)	: ${result.r}\n`;
+	r.innerHTML = `Reorder Point (r)	: ${result.r}\n unit(s)`;
 
 	let c = document.createElement("p");
-	c.innerHTML = `Total Cost (c)	: ${result.c}\n`;
+	c.innerHTML = `Total Cost per entry (c)	: $ ${result.c}\n`;
 
 	let f = document.createElement("p");
 	f.innerHTML = `Fill Rate (f)	: ${result.f}%\n`;
@@ -241,10 +241,16 @@ parameters.onsubmit = async(e) => {
 	body.append("I", I);
 	body.append("B", B);
 
-  let response = await fetch('/calculate', {
-    method: 'POST',
-    body: body
-  });
+	try {
+	  let response = await fetch('/calculate', {
+	    method: 'POST',
+	    body: body
+	  });
+	} catch(e) {
+		console.log(e);
+		alert("Sorry, data was too long! This server can only handle 30s latency!");
+	}
+
 
   let result = await response.json();
 
