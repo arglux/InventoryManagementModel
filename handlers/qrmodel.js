@@ -9,7 +9,7 @@ async function calculate(req, res) {
 
 	form.parse(req, async (err, fields) => {
     if (err) return;
-    console.log(fields)
+    // console.log(fields)
     let data = {
 			A: fields.fixedCost,
 			h: fields.holdingCost,
@@ -23,10 +23,11 @@ async function calculate(req, res) {
 			I: fields.I.split(","),
 			B: fields.B.split(","),
 		};
-		console.log(data);
+		console.log("Data received. Processing now...")
+		// console.log(data);
 
 		let result = await pyshell.run(script, data);
-		console.log(JSON.parse(result));
+		// console.log(JSON.parse(result));
 
 		res.send(JSON.parse(result));
   });

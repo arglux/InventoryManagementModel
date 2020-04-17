@@ -20,7 +20,7 @@ function PyShell() {
       pyshell.send(JSON.stringify(args));
 
       pyshell.on('message', function (message) {
-      	console.log(message);
+      	// console.log(message);
       	result = message;
       });
 
@@ -34,7 +34,7 @@ function PyShell() {
           reject(err)
         } else {
 	        console.log(`${script} finished`);
-	        console.log(result);
+	        // console.log(result);
 	        resolve(result);
         };
       });
