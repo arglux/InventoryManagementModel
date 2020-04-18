@@ -69,6 +69,18 @@ function parse(data) {
   thead.appendChild(headerCell);
 
 
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "Q (Raw Order Qty)";
+  row.appendChild(headerCell);
+
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "I (Raw Inventory Qty)";
+  row.appendChild(headerCell);
+
+  headerCell = document.createElement("TH");
+  headerCell.innerHTML = "B (Raw Backorder Qty)";
+  row.appendChild(headerCell);
+
   // Add the data rows from Excel file.
   for (var i = 0; i < excelRows.length; i++) {
     // Add the data row.
@@ -82,6 +94,18 @@ function parse(data) {
     cell = row.insertCell(-1);
     cell.innerHTML = excelRows[i].y;
     Y.push(excelRows[i].y);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].Q;
+    Q.push(excelRows[i].Q);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].I;
+    I.push(excelRows[i].I);
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = excelRows[i].B;
+    B.push(excelRows[i].B);
   }
 
   let chart2 = document.getElementById("chart2");
@@ -94,12 +118,30 @@ function parse(data) {
 
 let X = [];
 let Y = [];
-let I;
-let B;
+
+let Q = [];
+let I = [];
+let B = [];
+let Q_optimized;
+let I_optimized;
+let B_optimized;
+
+let Qc;
+let Ic;
+let Bc;
+let Tc;
+let cum_Tc;
+let Qc_optimized;
+let Ic_optimized;
+let Bc_optimized;
+let Tc_optimized;
+let cum_Tc_optimized;
+
 let counter = 0;
 let result;
 
 function report(result) {
+	// append variable report
 	counter += 1;
 
 	let header = document.createElement("li");
@@ -144,6 +186,46 @@ function report(result) {
     wrapper.appendChild(c);
     wrapper.appendChild(f);
 	resultReport.appendChild(wrapper);
+
+    //////////////////////////////////////////////
+
+    // calculate cumulative
+    cum_Tc = getCumulative(result.Tc);
+    cum_Tc_optimized = getCumulative(result.Tc_optimized);
+
+    //////////////////////////////////////////////
+
+    // append cost data (column) report
+    appendColumn(`Qc (Order Cost) Result ${counter}`, result.Qc);
+    appendColumn(`Ic (Inventory Cost) Result ${counter}`, result.Ic);
+    appendColumn(`Bc (Backorder Cost) Result ${counter}`, result.Bc);
+    appendColumn(`Tc (Total Cost) Result ${counter}`, result.Tc);
+    appendColumn(`Cumulative Total Cost Result ${counter}`, cum_Tc);
+
+    Qc = result.Qc;
+    Ic = result.Ic;
+    Bc = result.Bc;
+    Tc = result.Tc;
+
+    // append optimized data (column) report
+    appendColumn(`Q* (Opt Order Qty) Result ${counter}`, result.Q_optimized);
+    appendColumn(`I* (Opt Inventory Qty) Result ${counter}`, result.I_optimized);
+    appendColumn(`B* (Opt Backorder Qty) Result ${counter}`, result.B_optimized);
+
+    Q_optimized = result.Q_optimized;
+    I_optimized = result.I_optimized;
+    B_optimized = result.B_optimized;
+
+    appendColumn(`Qc* (Opt Order Cost) Result ${counter}`, result.Qc_optimized);
+    appendColumn(`Ic* (Opt Inventory Cost) Result ${counter}`, result.Ic_optimized);
+    appendColumn(`Bc* (Opt Backorder Cost) Result ${counter}`, result.Bc_optimized);
+    appendColumn(`Tc* (Opt Total Cost) Result ${counter}`, result.Tc_optimized);
+    appendColumn(`Cumulative Opt Total Cost Result ${counter}`, cum_Tc_optimized);
+
+    Qc_optimized = result.Qc_optimized;
+    Ic_optimized = result.Ic_optimized;
+    Bc_optimized = result.Bc_optimized;
+    Tc_optimized = result.Tc_optimized;
 }
 
 function appendColumn(header, result) {
@@ -170,6 +252,15 @@ function appendColumn(header, result) {
 
 
 const parameters=document.getElementById("parameters");
+function getCumulative(cost_list) {
+	cumulative_cost = [];
+	for (var i = 0; i < cost_list.length; i++) {
+		if (i == 0) cumulative_cost.push(parseFloat(cost_list[i]));
+		else cumulative_cost.push(parseFloat(cumulative_cost[i-1]) + parseFloat(cost_list[i]));
+	}
+	return cumulative_cost
+}
+
 parameters.onsubmit = async(e) => {
     e.preventDefault();
     if (X.length === 0 || Y.length === 0) {
@@ -181,9 +272,13 @@ parameters.onsubmit = async(e) => {
     loading.style.display="flex";
     loadingText.innerText="Processing...";
 
-    let body = new FormData(parameters);
-    body.append("X", X);
-    body.append("Y", Y);
+	let body = new FormData(parameters);
+	body.append("X", X);
+	body.append("Y", Y);
+	body.append("Q", Q);
+	body.append("I", I);
+	body.append("B", B);
+
 
     try {
         let response = await fetch('/calculate', {
@@ -210,4 +305,16 @@ parameters.onsubmit = async(e) => {
         loadingText.innerText="Process with Parameters";
     }
 };
+  let response = await fetch('/calculate', {
+    method: 'POST',
+    body: body
+  });
+
+
+  let result = await response.json();
+
+  report(result);
+  alert("Successfully Processed!")
+  // alert(JSON.stringify(result));
+}
 

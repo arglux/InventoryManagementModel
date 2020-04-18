@@ -57,6 +57,22 @@
         <div class="section">
             <h3>Step 2: Specify Parameters</h3>
             <a role="button" data-toggle="collapse" href="#parameters" aria-controls="parameters"><h6>Hide Parameters</h6></a>
+            <form class="form-group" id="parameters">
+                <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
+                <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
+                <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
+                <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
+                <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
+                <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
+                <label for="orderingCost" class="font-weight-bold">Ordering Cost ($)</label>
+                <input class="form-control mb-3" placeholder="Ordering Cost ($)" name="orderingCost" id="orderingCost">
+                <hr>
+                <label for="startingInventory" class="font-weight-bold">Starting Inventory (Unit)</label>
+                <input class="form-control mb-3" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
+                <label for="leadTime" class="font-weight-bold">Lead Time (Entry)</label>
+                <input class="form-control mb-3" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
+                <button type="submit" class="btn btn-outline-primary"><span class="font-weight-bold">Process with Parameters</span></button>
+            </form>
             <form class="form-group mt-3 collapse show" id="parameters">
                 <div class="row">
                     <div class="col-md">
