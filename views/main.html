@@ -10,16 +10,30 @@
     <script type="text/javascript" src="scripts/main.js" defer></script>
     <script type="text/javascript" src="scripts/charts.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container">
 
-
         <div class="section">
             <h1>Inventory System Modelling - (Q,r) Model</h1>
+            <a data-toggle="collapse" href="#primer" role="button" aria-expanded="false" aria-controls="primer">
+                <h6>Getting Started</h6>
+            </a>
+            <div class="collapse" id="primer">
+                <p>
+                    Before utilising the tool, please format the data into a simple specified format which are either .csv or .xlsx (Excel) files.
+                    You can download a sample file here:
+                </p>
+                <a class="btn btn-outline-primary" href="sample.xlsx" download><span class="font-weight-bold">Download</span></a>
+            </div>
         </div>
+
+
         <div class="section-gray">
             <h3>Step 1: Upload and Process Data</h3>
             <input type="file" class="data" id="data" name="data"/>
@@ -37,31 +51,53 @@
                 <canvas id="chart1"></canvas>
                 <div id="chart2"></div>
             </div>
-
         </div>
+
+
         <div class="section">
             <h3>Step 2: Specify Parameters</h3>
-            <form class="form-group" id="parameters">
-                <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
-                <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
-                <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
-                <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
-                <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
-                <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
-                <hr>
-                <label for="startingInventory" class="font-weight-bold">Starting Inventory (Unit)</label>
-                <input class="form-control mb-3" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
-                <label for="leadTime" class="font-weight-bold">Lead Time (Entry)</label>
-                <input class="form-control mb-3" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
-                <button type="submit" class="btn btn-outline-primary"><span class="font-weight-bold">Process with Parameters</span></button>
+            <a role="button" data-toggle="collapse" href="#parameters" aria-controls="parameters"><h6>Hide Parameters</h6></a>
+            <form class="form-group mt-3 collapse show" id="parameters">
+                <div class="row">
+                    <div class="col-md">
+                        <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
+                        <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
+                    </div>
+                    <div class="col-md">
+                        <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
+                        <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
+                    </div>
+                    <div class="col-md">
+                        <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
+                        <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <label for="leadTime" class="font-weight-bold">Lead Time (Entry)</label>
+                        <input class="form-control mb-3" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
+                    </div>
+                    <div class="col-md">
+                        <label for="startingInventory" class="font-weight-bold">Starting Inventory (Unit)</label>
+                        <input class="form-control mb-3" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">
+                    <span class="flex-row">
+                        <span class="spin-wrap" id="loading"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></span>
+                        <span class="font-weight-bold" id="loadingText">Process with Parameters</span>
+                    </span>
+                </button>
             </form>
+
         </div>
         <div class="section-gray">
-            <h3>Step 3: View Generated Report</h3>
-            <div id="dataTable" style="overflow-y:auto;">
-                <table id="table"></table>
-            </div>
+            <h3>Step 3: View Report</h3>
             <hr>
+            <canvas id="chart3"></canvas>
+            <table id="table">
+                <tr></tr>
+            </table>
             <div id="resultReport"></div>
         </div>
     </div>

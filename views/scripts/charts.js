@@ -11,37 +11,47 @@ window.onload = function () {
             forData.className="btn btn-outline-success";
         }
 
-    })
+    });
 };
 
 /*************Chart Functions*************/
 
 const chart1 = document.getElementById("chart1");
-const chartc = document.getElementById("chart-container");
 const chart2 = document.getElementById("chart2");
+const chartc = document.getElementById("chart-container");
 let graph=false;
 let barChart = new Chart(chart1, {});
+let wide;
 
 function drawChart() {
     graph=true;
     chartc.style.maxHeight="1000px";
     chart2.style.display="none";
     barChart.destroy();
+    if (X.length<=20) {
+        wide=0.75
+    } else wide =1;
     barChart = new Chart(chart1, {
-        type: 'bar',
+        type: "bar",
         data: {
             labels: X,
             datasets: [
                 {
                     data: Y,
-                    label: "Monthly Demand",
+                    label: "Daily Demand",
                     backgroundColor: "#007bff",
-                    fill: false
+                    categoryPercentage: 1.0,
+                    barPercentage: wide
                 },
             ]
+        },
+        options: {
+            tooltips: {
+                mode: 'index',
+                intersect:false
+            }
         }
     });
-
 }
 
 let tog;
@@ -68,6 +78,49 @@ function hideChart() {
             chartc.style.maxHeight="9999px"
         }
     }
+}
+
+const chart3 = document.getElementById("chart3");
+let lineChart = new Chart(chart3, {});
+function drawChart2() {
+    lineChart.destroy();
+    lineChart = new Chart(chart3, {
+        type: "line",
+        data: {
+            labels: X,
+            datasets: [
+                {
+                    data: I,
+                    label: "Inventory",
+                    borderColor:"rgba(0, 200, 81,1)",
+                    backgroundColor: "rgba(0, 200, 81,0.25)",
+                    hoverBackgroundColor: "rgba(0, 200, 81,0.25)",
+                    fill:"start",
+                    pointRadius:0
+                },
+                {
+                    data: B,
+                    label: "Backorders",
+                    borderColor:"rgba(255, 68, 68,1)",
+                    backgroundColor: "rgba(255, 68, 68, 0.25)",
+                    hoverBackgroundColor: "rgba(255, 68, 68, 0.75)",
+                    fill:"start",
+                    pointRadius:0,
+                },
+            ],
+        },
+        options: {
+            elements: {
+                line: {
+                    tension: 0
+                }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            }
+        }
+    });
 }
 
 

@@ -32,7 +32,7 @@ function extract() {
   } else {
   	alert("Please upload a valid Excel file.");
   }
-};
+}
 
 function parse(data) {
   // Read the Excel File data.
@@ -61,7 +61,7 @@ function parse(data) {
 
   // Add the header cells.
   var headerCell = document.createElement("TH");
-  headerCell.innerHTML = "X (Month)";
+  headerCell.innerHTML = "X (Day)";
   thead.appendChild(headerCell);
 
   headerCell = document.createElement("TH");
@@ -97,46 +97,58 @@ let Y = [];
 let I;
 let B;
 let counter = 0;
+let result;
 
 function report(result) {
 	counter += 1;
-	let header = document.createElement("h3");
+
+	let header = document.createElement("li");
 	header.innerHTML = `Results ${counter}:`;
+	header.style.fontWeight="bold";
+	header.className="list-group-item";
 
-	let mu = document.createElement("p");
+	let mu = document.createElement("li");
 	mu.innerHTML = `Mean (μ)	: ${result.mu}\n`;
+    mu.className="list-group-item";
 
-	let std = document.createElement("p");
+	let std = document.createElement("li");
 	std.innerHTML = `Standard Dev (σ)	: ${result.std}\n`;
+    std.className="list-group-item";
 
-	let kyu = document.createElement("p");
+	let kyu = document.createElement("li");
 	kyu.innerHTML = `Order Qty (Q)	: ${result.Q}\n`;
+    kyu.className="list-group-item";
 
-	let r = document.createElement("p");
+	let r = document.createElement("li");
 	r.innerHTML = `Reorder Point (r)	: ${result.r}\n`;
+    r.className="list-group-item";
 
-	let c = document.createElement("p");
+	let c = document.createElement("li");
 	c.innerHTML = `Total Cost (c)	: ${result.c}\n`;
+    c.className="list-group-item";
 
 	let f = document.createElement("p");
 	f.innerHTML = `Fill Rate (f)	: ${result.f}%\n`;
+    f.className="list-group-item";
 
-	let line = document.createElement("hr");
+    let wrapper=document.createElement("ul");
+    wrapper.className="list-group pt-3 pb-3";
+    wrapper.style.backgroundColor="transparent";
 
 	let resultReport = document.getElementById("resultReport");
-	resultReport.appendChild(header);
-	resultReport.appendChild(mu);
-	resultReport.appendChild(std);
-	resultReport.appendChild(kyu);
-	resultReport.appendChild(r);
-	resultReport.appendChild(c);
-	resultReport.appendChild(f);
-	resultReport.appendChild(line);
+	wrapper.appendChild(header);
+    wrapper.appendChild(mu);
+    wrapper.appendChild(std);
+    wrapper.appendChild(kyu);
+    wrapper.appendChild(r);
+    wrapper.appendChild(c);
+    wrapper.appendChild(f);
+	resultReport.appendChild(wrapper);
 }
 
 function appendColumn(header, result) {
   // Add the header row.
-  let table = document.getElementById("table")
+  let table = document.getElementById("table");
   var row = table.rows[0];
 
   // Add the header cells.
@@ -153,36 +165,49 @@ function appendColumn(header, result) {
     var cell = row.insertCell(-1);
     cell.innerHTML = result[i];
   }
-
 }
+
+
+
 const parameters=document.getElementById("parameters");
 parameters.onsubmit = async(e) => {
-	e.preventDefault();
+    e.preventDefault();
+    if (X.length === 0 || Y.length === 0) {
+        alert("Excel file must be submitted AND extracted!");
+        return
+    }
+    let loading=document.getElementById("loading");
+    let loadingText=document.getElementById("loadingText");
+    loading.style.display="flex";
+    loadingText.innerText="Processing...";
 
-	if (X.length == 0 || Y.length == 0) {
-		alert("Excel file must be submitted AND extracted!");
-		return
-	}
+    let body = new FormData(parameters);
+    body.append("X", X);
+    body.append("Y", Y);
 
-	let body = new FormData(parameters);
-	body.append("X", X);
-	body.append("Y", Y);
+    try {
+        let response = await fetch('/calculate', {
+            method: 'POST',
+            body: body
+        });
+        let result= await response.json();
+        report(result);
+        // appendColumn(`Inventory Data ${counter}`, result.I);
+        // appendColumn(`Backorder Data ${counter}`, result.B);
 
-  let response = await fetch('/calculate', {
-    method: 'POST',
-    body: body
-  });
+        I = result.I;
+        B = result.B;
+        console.log(I);
+        console.log(B);
+        drawChart2();
 
-  let result = await response.json();
-
-  report(result);
-  appendColumn(`Inventory Data ${counter}`, result.I);
-  appendColumn(`Backorder Data ${counter}`, result.B);
-
-  I = result.I;
-  B = result.B;
-
-  alert("Successfully Processed!")
-  // alert(JSON.stringify(result));
+    } catch (e) {
+        console.log(e.message);
+        alert("Something went wrong")
+    }
+    finally {
+        loading.style.display="none";
+        loadingText.innerText="Process with Parameters";
+    }
 };
 

@@ -2,14 +2,14 @@ let {PythonShell} = require('python-shell');
 let path = require("path");
 
 function PyShell() {
-
 	this.options = {
-		pythonPath: process.env.PYTHON_PATH, // leave it blank for heroku
-	}
+		pythonPath: "C:\\Users\\aaron\\AppData\\Local\\Programs\\Python\\Python36\\python.exe", // leave it blank for heroku
+	};
+	console.log(this.options);
 
 	this.test = function() {
 		console.log("PyShell instantiated.");
-	}
+	};
 
   this.run = function(file, args) {
     return new Promise((resolve, reject) => {
@@ -35,11 +35,11 @@ function PyShell() {
 	        console.log(`${script} finished`);
 	        console.log(result);
 	        resolve(result);
-        };
+        }
       });
     });
   }
-};
+}
 
 // exports
 exports.PyShell = PyShell;

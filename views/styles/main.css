@@ -45,5 +45,19 @@ h1,h3 {
     margin-top: 16px;
 }
 
+#loading{
+    display: none;
+}
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.spin-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 8px;
+}
 
