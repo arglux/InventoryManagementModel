@@ -25,12 +25,9 @@ let wide;
 
 function drawChart() {
     graph=true;
-    chartc.style.maxHeight="1000px";
+    chartc.style.maxHeight="500px";
     chart2.style.display="none";
     barChart.destroy();
-    if (X.length<=20) {
-        wide=0.75
-    } else wide =1;
     barChart = new Chart(chart1, {
         type: "bar",
         data: {
@@ -38,10 +35,31 @@ function drawChart() {
             datasets: [
                 {
                     data: Y,
-                    label: "Daily Demand",
-                    backgroundColor: "#007bff",
+                    label: "Demand (Units)",
+                    backgroundColor: "#118AB2",
                     categoryPercentage: 1.0,
-                    barPercentage: wide
+                    barPercentage: 1
+                },
+                {
+                    data: Q,
+                    label: "Supply (Units)",
+                    backgroundColor: "#06D6A0",
+                    categoryPercentage: 1.0,
+                    barPercentage: 1
+                },
+                {
+                    data: B,
+                    label: "Backorders (Units)",
+                    backgroundColor: "#EF476F",
+                    categoryPercentage: 1.0,
+                    barPercentage: 1
+                },
+                {
+                    data: I,
+                    label: "Inventory (Units)",
+                    borderColor: "#118AB2",
+                    type: "line",
+                    pointRadius:0
                 },
             ]
         },
@@ -49,7 +67,12 @@ function drawChart() {
             tooltips: {
                 mode: 'index',
                 intersect:false
-            }
+            },
+            elements: {
+                line: {
+                    tension: 0
+                }
+            },
         }
     });
 }
@@ -75,51 +98,113 @@ function hideChart() {
         if (!hide) {
             chartc.style.maxHeight="0"
         } else {
-            chartc.style.maxHeight="9999px"
+            chartc.style.maxHeight="500px"
         }
     }
 }
 
 const chart3 = document.getElementById("chart3");
-let lineChart = new Chart(chart3, {});
+const chart4 = document.getElementById("chart4");
+const chart5 = document.getElementById("chart5");
+let lineChart1 = new Chart(chart3, {});
+let lineChart2 = new Chart(chart4, {});
+let lineChart3 = new Chart(chart5, {});
+let options= {
+    elements: {
+        line: {
+            tension: 0
+        }
+    },
+    tooltips: {
+        mode: 'index',
+        intersect: false
+    }
+};
 function drawChart2() {
-    lineChart.destroy();
-    lineChart = new Chart(chart3, {
+    lineChart1.destroy();
+    lineChart1 = new Chart(chart3, {
         type: "line",
         data: {
             labels: X,
             datasets: [
                 {
-                    data: I,
-                    label: "Inventory",
+                    data: I_optimized,
+                    label: "Optimal Inventory Level",
                     borderColor:"rgba(0, 200, 81,1)",
-                    backgroundColor: "rgba(0, 200, 81,0.25)",
-                    hoverBackgroundColor: "rgba(0, 200, 81,0.25)",
+                    backgroundColor: "rgba(0, 200, 81, 0.25)",
+                    hoverBackgroundColor: "rgba(0, 200, 81, 0.75)",
+                    fill:"start",
+                    pointRadius:0,
+                },
+                {
+                    data: I,
+                    label: "Actual Inventory Level",
+                    borderColor:"rgba(0,191,255,1)",
+                    backgroundColor: "rgba(0,191,255,0.25)",
+                    hoverBackgroundColor: "rgba(0,191,255,0.25)",
+                    fill:"start",
+                    pointRadius:0
+                },
+            ],
+        },
+        options: options
+    });
+
+    lineChart2.destroy();
+    lineChart2 = new Chart(chart4, {
+        type: "line",
+        data: {
+            labels: X,
+            datasets: [
+                {
+                    data: B,
+                    label: "Actual Backorder Level",
+                    borderColor:"rgba(0,191,255,1)",
+                    backgroundColor: "rgba(0,191,255,0.25)",
+                    hoverBackgroundColor: "rgba(0,191,255,0.25)",
                     fill:"start",
                     pointRadius:0
                 },
                 {
-                    data: B,
-                    label: "Backorders",
-                    borderColor:"rgba(255, 68, 68,1)",
-                    backgroundColor: "rgba(255, 68, 68, 0.25)",
-                    hoverBackgroundColor: "rgba(255, 68, 68, 0.75)",
+                    data: B_optimized,
+                    label: "Optimal Backorder Level",
+                    borderColor:"rgba(0, 200, 81,1)",
+                    backgroundColor: "rgba(0, 200, 81, 0.25)",
+                    hoverBackgroundColor: "rgba(0, 200, 81, 0.75)",
                     fill:"start",
                     pointRadius:0,
                 },
             ],
         },
-        options: {
-            elements: {
-                line: {
-                    tension: 0
-                }
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            }
-        }
+        options: options
+    });
+    lineChart3.destroy();
+    lineChart3 = new Chart(chart5, {
+        type: "line",
+        data: {
+            labels: X,
+            datasets: [
+                {
+                    data: cum_Tc,
+                    label: "Estimated Actual Cumulative Cost",
+                    borderColor:"rgba(0,191,255,1)",
+                    backgroundColor: "rgba(0,191,255,0.25)",
+                    hoverBackgroundColor: "rgba(0,191,255,0.25)",
+                    fill:"start",
+                    pointRadius:0
+                },
+                {
+                    data: cum_Tc_optimized,
+                    label: "Optimal Cumulative Cost",
+                    borderColor:"rgba(0, 200, 81,1)",
+                    backgroundColor: "rgba(0, 200, 81, 0.25)",
+                    hoverBackgroundColor: "rgba(0, 200, 81, 0.75)",
+                    fill:"start",
+                    pointRadius:0,
+                },
+            ],
+        },
+        options: options
     });
 }
 

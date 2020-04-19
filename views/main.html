@@ -27,9 +27,23 @@
             <div class="collapse" id="primer">
                 <p>
                     Before utilising the tool, please format the data into a simple specified format which are either .csv or .xlsx (Excel) files.
-                    You can download a sample file here:
+                    You may download a sample file here:
                 </p>
-                <a class="btn btn-outline-primary" href="sample.xlsx" download><span class="font-weight-bold">Download</span></a>
+                <a class="btn btn-outline-primary mb-3" href="sample.xlsx" download><span class="font-weight-bold">Download</span></a>
+
+
+                <p>
+                    <span class="font-weight-bold">Each of the columns represents a quantity that needs to be labeled using a one-letter keyword.
+                     Below is an explanation of each column required:
+                    </span>
+                </p>
+                <ul>
+                    <li>Column A (Labeled 'x') - Inventory Level</li>
+                    <li>Column B (Labeled 'y') - Units Sold/Demand</li>
+                    <li>Column C (Labeled 'Q') - Order Quantity Received</li>
+                    <li>Column D (Labeled 'I') - Units in Inventory </li>
+                    <li>Column E (Labeled 'B') - Units Backordered</li>
+                </ul>
             </div>
         </div>
 
@@ -52,52 +66,39 @@
                 <div id="chart2"></div>
             </div>
         </div>
-
-
         <div class="section">
             <h3>Step 2: Specify Parameters</h3>
             <a role="button" data-toggle="collapse" href="#parameters" aria-controls="parameters"><h6>Hide Parameters</h6></a>
-            <form class="form-group" id="parameters">
-                <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
-                <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
-                <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
-                <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
-                <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
-                <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
-                <label for="orderingCost" class="font-weight-bold">Ordering Cost ($)</label>
-                <input class="form-control mb-3" placeholder="Ordering Cost ($)" name="orderingCost" id="orderingCost">
-                <hr>
-                <label for="startingInventory" class="font-weight-bold">Starting Inventory (Unit)</label>
-                <input class="form-control mb-3" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
-                <label for="leadTime" class="font-weight-bold">Lead Time (Entry)</label>
-                <input class="form-control mb-3" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
-                <button type="submit" class="btn btn-outline-primary"><span class="font-weight-bold">Process with Parameters</span></button>
-            </form>
             <form class="form-group mt-3 collapse show" id="parameters">
                 <div class="row">
-                    <div class="col-md">
+                    <div class="col-lg">
                         <label for="backorderCost" class="font-weight-bold">Backorder Cost ($)</label>
-                        <input class="form-control mb-2" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
+                        <input class="form-control mb-2" required="required" placeholder="Backorder Cost ($)" name="backorderCost" id="backorderCost">
                     </div>
-                    <div class="col-md">
+                    <div class="col-lg">
                         <label for="fixedCost" class="font-weight-bold">Fixed Cost ($)</label>
-                        <input class="form-control mb-2" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
+                        <input class="form-control mb-2" required="required" placeholder="Fixed Cost ($)" name="fixedCost" id="fixedCost">
                     </div>
-                    <div class="col-md">
+                    <div class="col-lg">
                         <label for="holdingCost" class="font-weight-bold">Holding Cost ($)</label>
-                        <input class="form-control mb-3" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
+                        <input class="form-control mb-3" required="required" placeholder="Holding Cost ($)" name="holdingCost" id="holdingCost">
+                    </div>
+                    <div class="col-lg">
+                        <label for="orderingCost" class="font-weight-bold">Ordering Cost ($)</label>
+                        <input class="form-control mb-3" required="required" placeholder="Ordering Cost ($)" name="orderingCost" id="orderingCost">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <label for="leadTime" class="font-weight-bold">Lead Time (Entry)</label>
-                        <input class="form-control mb-3" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
+                        <label for="leadTime" class="font-weight-bold">Lead Time (Days)</label>
+                        <input class="form-control mb-3" required="required" placeholder="Lead Time (Unit)" name="leadTime" id="leadTime">
                     </div>
                     <div class="col-md">
                         <label for="startingInventory" class="font-weight-bold">Starting Inventory (Unit)</label>
-                        <input class="form-control mb-3" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
+                        <input class="form-control mb-3" required="required" placeholder="Starting Inventory (Unit)" name="startingInventory" id="startingInventory">
                     </div>
                 </div>
+                <p>Please enter the same starting inventory to simulate the optimal model under the same observed demand.</p>
                 <button type="submit" class="btn btn-outline-primary">
                     <span class="flex-row">
                         <span class="spin-wrap" id="loading"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></span>
@@ -110,7 +111,28 @@
         <div class="section-gray">
             <h3>Step 3: View Report</h3>
             <hr>
-            <canvas id="chart3"></canvas>
+            <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <h4>Inventory</h4>
+                        <canvas id="chart3"></canvas>
+                    </div>
+                    <div class="carousel-item">
+                        <h4>Backorder</h4>
+                        <canvas id="chart4"></canvas>
+                    </div>
+                    <div class="carousel-item">
+                        <h4>Cost</h4>
+                        <canvas id="chart5"></canvas>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-outline-primary" href="#carousel" role="button" data-slide="prev">
+                <span class="font-weight-bold">Previous</span>
+            </a>
+            <a class="btn btn-outline-primary" href="#carousel" role="button" data-slide="next">
+                <span class="font-weight-bold">Next</span>
+            </a>
             <table id="table">
                 <tr></tr>
             </table>
