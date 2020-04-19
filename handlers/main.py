@@ -49,7 +49,7 @@ def main():
 	_, _, _, result = qr_model.run()
 	I_optimized = result["inventory"]
 	B_optimized = result["backorders"]
-	Q_optimized = result["orders"] 
+	Q_optimized = result["orders"]
 	f = result["fill_rate"] * 100
 	# Qc_optimized = result["fixed_cost"]
 	# Ic_optimized = result["holding_cost"]
