@@ -297,7 +297,7 @@ parameters.onsubmit = async(e) => {
 
     } catch (e) {
         console.log(e.message);
-        alert("Something went wrong")
+        alert("Sorry, data is too long! Try to keep it around 365 entries!");
     }
     finally {
         loading.style.display="none";
