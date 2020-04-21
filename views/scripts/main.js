@@ -290,7 +290,8 @@ parameters.onsubmit = async(e) => {
         jobId = await fetch('/calculate', {
             method: 'POST',
             body: body
-        });
+        }).json();
+
         alert(`Data sent! Please wait! id: ${jobId}`);
 
         // let result= await response.json();
