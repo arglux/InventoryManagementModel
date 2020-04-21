@@ -291,7 +291,8 @@ parameters.onsubmit = async(e) => {
             body: body
         });
         let result= await response.json();
-        report(result);
+        console.log(result);
+        // report(result);
 
         //graphs
         drawChart2();
