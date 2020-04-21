@@ -6,7 +6,7 @@ let REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 let workQueue = new Queue('work', REDIS_URL);
 let pyshell = new PyShell.PyShell();
 
-let result = {};
+let job_result = {};
 async function calculate(req, res) {
 	let form = formidable({ multiples: true });
 	let script = "main.py";
@@ -44,13 +44,14 @@ async function calculate(req, res) {
 
 // define workQueue process as running pyshell
 workQueue.process(async function(job) {
-	result[job.data.id] = await pyshell.run(script, job.data);
+	job_result[job.data.id] = await pyshell.run(script, job.data);
 	throw new Error('pyshell error!')
 });
 
 async function result(req, res) {
 	let id = req.body.id
-	res.send(JSON.parse(result[id]) || null);
+	if (job_result[id] == undefined) res.send(null);
+	else res.send(JSON.parse(job_result[id]));
 }
 
 exports.calculate = calculate;

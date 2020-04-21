@@ -290,6 +290,7 @@ parameters.onsubmit = async(e) => {
             method: 'POST',
             body: body
         });
+        alert("Data sent! Please wait this may take a while depending on data length.");
 
         response = null
         while (response == null) {
