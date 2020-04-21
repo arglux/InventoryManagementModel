@@ -48,9 +48,10 @@ workQueue.process(async function(job) {
 	throw new Error('pyshell error!')
 });
 
-async function calculate(req, res) {
+async function result(req, res) {
 	let id = req.body.id
 	res.send(JSON.parse(result[id]) || null);
 }
 
 exports.calculate = calculate;
+exports.result = result;
