@@ -292,20 +292,6 @@ parameters.onsubmit = async(e) => {
         });
         alert("Data sent! Please wait this may take a while depending on data length.");
 
-        response = null
-        while (response == null) {
-        	response = await fetch('/result', {
-            method: 'GET',
-            body: {
-            	id: counter,
-            }
-        	});
-        	console.log(`response is: ${response}`)
-        }
-
-        result = await response.json();
-        console.log(result);
-
         // report(result);
         // drawChart2();
 
@@ -319,3 +305,18 @@ parameters.onsubmit = async(e) => {
     }
 };
 
+let final_result = null;
+function getResult() {
+    while (response == null) {
+    	response = await fetch('/result', {
+        method: 'GET',
+        body: {
+        	id: counter,
+        }
+    	});
+    	console.log(`response is: ${response}`)
+    }
+
+    result = await response.json();
+    console.log(result);
+}
