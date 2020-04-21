@@ -298,7 +298,7 @@ parameters.onsubmit = async(e) => {
         // report(result);
 
         //graphs
-        // drawChart2();
+        drawChart2();
 
     } catch (e) {
         console.log(e.message);
@@ -333,6 +333,7 @@ if (jobId != null) {
 	  } finally {
 	  	loading.style.display="none";
 	  	loadingText.innerText="Process with Parameters";
+	  	jobId = null;
 	  }
 	}, 500);
 }
