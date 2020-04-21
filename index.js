@@ -16,6 +16,7 @@ app.use(express.json({ limit: '10mb' }));
 
 // routes and handlers
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/views/main.html")));
+app.get('/result', qrmodel.result);
 app.post('/calculate', qrmodel.calculate);
 
 

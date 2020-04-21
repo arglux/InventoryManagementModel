@@ -290,12 +290,19 @@ parameters.onsubmit = async(e) => {
             method: 'POST',
             body: body
         });
-        let result= await response.json();
-        console.log(result);
-        // report(result);
 
-        //graphs
-        drawChart2();
+        response = await fetch('/result', {
+            method: 'GET',
+            body: {
+            	id: counter,
+            }
+        });
+
+        result = await response.json();
+        console.log(result);
+
+        // report(result);
+        // drawChart2();
 
     } catch (e) {
         console.log(e.message);
