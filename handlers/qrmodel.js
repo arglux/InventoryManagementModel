@@ -31,13 +31,13 @@ async function calculate(req, res) {
 		console.log("Data received. Processing now...")
 		console.log(data);
 
-		workQueue.add(data);
+		let jobId = workQueue.add(data);
 		// console.log(workQueue);
 
 		// let result = await pyshell.run(script, data);
 		// console.log(JSON.parse(result));
 
-		res.sendStatus(200);
+		res.send(jobId);
 		// res.send(JSON.parse(result));
   });
 }

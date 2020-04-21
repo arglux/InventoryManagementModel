@@ -264,6 +264,7 @@ function getCumulative(cost_list) {
     return cumulative_cost
 }
 
+let jobId;
 const parameters=document.getElementById("parameters");
 parameters.onsubmit = async(e) => {
     e.preventDefault();
@@ -286,15 +287,17 @@ parameters.onsubmit = async(e) => {
     body.append("id", counter);
 
     try {
-        let response = await fetch('/calculate', {
+        jobId = await fetch('/calculate', {
             method: 'POST',
             body: body
         });
-        let result= await response.json();
-        report(result);
+        alert(`Data sent! Please wait! id: ${jobId}`);
+
+        // let result= await response.json();
+        // report(result);
 
         //graphs
-        drawChart2();
+        // drawChart2();
 
     } catch (e) {
         console.log(e.message);
