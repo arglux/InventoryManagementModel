@@ -44,7 +44,7 @@ async function calculate(req, res) {
 
 // define workQueue process as running pyshell
 workQueue.process(async function(job) {
-	console.log(`job started ${job.data.id}`);
+	console.log(`job started ${job.data}`);
 	job_result[job.data.id] = await pyshell.run(script, job.data);
 	throw new Error('pyshell error!')
 });
