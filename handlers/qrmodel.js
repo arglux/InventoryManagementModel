@@ -50,7 +50,7 @@ workQueue.process(function(job, done) {
 
 	let result;
   let script = "main.py";
-  let pyshell = new PythonShell(path.join(__dirname, script), this.options);
+  let pyshell = new PythonShell(path.join(__dirname, script));
 
   pyshell.send(JSON.stringify(job.data));
 
@@ -75,6 +75,7 @@ workQueue.process(function(job, done) {
       job_result[job.id] = result
       done();
     }
+  });
 });
 
 async function result(req, res) {
