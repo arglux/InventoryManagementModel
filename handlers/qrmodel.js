@@ -1,6 +1,9 @@
 let PyShell = require("./pyshell");
 let formidable = require('formidable');
+let Queue = require('bull');
 
+let REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+let workQueue = new Queue('work', REDIS_URL);
 let pyshell = new PyShell.PyShell();
 
 async function calculate(req, res) {
@@ -11,6 +14,7 @@ async function calculate(req, res) {
     if (err) return;
     // console.log(fields)
     let data = {
+    	id: fields.id,
 			A: fields.fixedCost,
 			h: fields.holdingCost,
 			b: fields.backorderCost,
@@ -24,7 +28,7 @@ async function calculate(req, res) {
 			B: fields.B.split(","),
 		};
 		console.log("Data received. Processing now...")
-		// console.log(data);
+		console.log(data);
 
 		let result = await pyshell.run(script, data);
 		// console.log(JSON.parse(result));

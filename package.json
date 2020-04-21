@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/heavensward-argentlux/InventoryManagementModel#readme",
   "dependencies": {
+    "bull": "^3.13.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "formidable": "^1.2.2",
