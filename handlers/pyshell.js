@@ -13,6 +13,7 @@ function PyShell() {
 
   this.run = function(file, args) {
     return new Promise((resolve, reject) => {
+    	console.log(`pyshell running, data: ${args}`)
     	let result;
       let script = file;
       let pyshell = new PythonShell(path.join(__dirname, script), this.options);
