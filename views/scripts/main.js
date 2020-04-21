@@ -283,17 +283,17 @@ parameters.onsubmit = async(e) => {
     body.append("Q", Q);
     body.append("I", I);
     body.append("B", B);
-    body.append("id", counter);
 
     try {
         let response = await fetch('/calculate', {
             method: 'POST',
             body: body
         });
-        alert("Data sent! Please wait this may take a while depending on data length.");
+        let result= await response.json();
+        report(result);
 
-        // report(result);
-        // drawChart2();
+        //graphs
+        drawChart2();
 
     } catch (e) {
         console.log(e.message);
@@ -305,18 +305,3 @@ parameters.onsubmit = async(e) => {
     }
 };
 
-let final_result = null;
-function getResult() {
-    while (response == null) {
-    	response = await fetch('/result', {
-        method: 'GET',
-        body: {
-        	id: counter,
-        }
-    	});
-    	console.log(`response is: ${response}`)
-    }
-
-    result = await response.json();
-    console.log(result);
-}
