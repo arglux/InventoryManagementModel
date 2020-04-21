@@ -50,7 +50,7 @@ workQueue.process(async function(job) {
 
 async function calculate(req, res) {
 	let id = req.body.id
-	res.send(JSON.parse(result[id]))
+	res.send(JSON.parse(result[id]) || null);
 }
 
 exports.calculate = calculate;

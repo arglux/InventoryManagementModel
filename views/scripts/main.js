@@ -291,12 +291,15 @@ parameters.onsubmit = async(e) => {
             body: body
         });
 
-        response = await fetch('/result', {
+        response = null
+        while (response == null) {
+        	response = await fetch('/result', {
             method: 'GET',
             body: {
             	id: counter,
             }
-        });
+        	});
+        }
 
         result = await response.json();
         console.log(result);
