@@ -283,6 +283,7 @@ parameters.onsubmit = async(e) => {
     body.append("Q", Q);
     body.append("I", I);
     body.append("B", B);
+    body.append("id", counter);
 
     try {
         let response = await fetch('/calculate', {
