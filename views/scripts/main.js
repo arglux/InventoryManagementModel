@@ -311,7 +311,7 @@ parameters.onsubmit = async(e) => {
 };
 
 if (jobId != null) {
-	let intervalId = setInterval(function(){
+	let intervalId = setInterval(async function(){
 		alert("Interval reached");
 		try {
 			let response = fetch('/result', {
