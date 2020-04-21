@@ -311,4 +311,27 @@ parameters.onsubmit = async(e) => {
 };
 
 const submit_btn=document.getElementById("submit_button");
+submit_btn.addEventListener("click", function(e) {
+	try {
+		let response = fetch('/result', {
+          method: 'GET',
+          body: {
+          	id: jobId
+          }
+        });
+		let result= await response.json();
+		report(result);
+
+    //graphs
+    drawChart2();
+
+  } catch (e) {
+      console.log(e.message);
+      alert("Sorry, data is too long! Try to keep it around 365 entries!");
+  }
+  finally {
+      loading.style.display="none";
+      loadingText.innerText="Process with Parameters";
+  }
+})
 
