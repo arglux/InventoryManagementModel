@@ -290,8 +290,8 @@ parameters.onsubmit = async(e) => {
         jobId = await fetch('/calculate', {
             method: 'POST',
             body: body
-        }).json();
-
+        });
+        console.log(jobId)
         alert(`Data sent! Please wait! id: ${jobId}`);
 
         // let result= await response.json();
@@ -309,4 +309,6 @@ parameters.onsubmit = async(e) => {
         loadingText.innerText="Process with Parameters";
     }
 };
+
+const submit_btn=document.getElementById("submit_button");
 
