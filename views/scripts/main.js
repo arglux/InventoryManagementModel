@@ -300,6 +300,7 @@ parameters.onsubmit = async(e) => {
             	id: counter,
             }
         	});
+        	console.log(`response is: ${response}`)
         }
 
         result = await response.json();
