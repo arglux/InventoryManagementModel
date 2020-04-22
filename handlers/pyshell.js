@@ -3,7 +3,7 @@ let path = require("path");
 
 function PyShell() {
 	this.options = {
-		pythonPath: "process.env.PYTHON_PATH", // leave it blank for heroku
+		pythonPath: process.env.PYTHON_PATH, // leave it blank for heroku
         // pythonPath: "C:\\Users\\aaron\\AppData\\Local\\Programs\\Python\\Python36\\python.exe"
 	};
 	console.log(this.options);
