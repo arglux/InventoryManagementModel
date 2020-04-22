@@ -11,10 +11,10 @@ def main():
 	lines = read_stdin()
 
 	# parse args
-	A = int(lines['A'])
-	h = int(lines['h'])
-	b = int(lines['b'])
-	P = int(lines['P'])
+	A = float(lines['A'])
+	h = float(lines['h'])
+	b = float(lines['b'])
+	P = float(lines['P'])
 	i0 = int(lines['i0'])
 	b0 = 0
 	L = int(lines['L'])
