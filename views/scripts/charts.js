@@ -21,13 +21,14 @@ const chart2 = document.getElementById("chart2");
 const chartc = document.getElementById("chart-container");
 let graph=false;
 let barChart = new Chart(chart1, {});
-let wide;
 
 function drawChart() {
     graph=true;
-    chartc.style.maxHeight="500px";
+    chartc.style.maxHeight="550px";
     chart2.style.display="none";
     barChart.destroy();
+    let wide = (X.length/300+1).toFixed(0);
+    console.log(wide);
     barChart = new Chart(chart1, {
         type: "bar",
         data: {
@@ -36,23 +37,23 @@ function drawChart() {
                 {
                     data: Y,
                     label: "Demand (Units)",
-                    backgroundColor: "#118AB2",
-                    categoryPercentage: 1.0,
-                    barPercentage: 1
+                    backgroundColor: "#06D6A0",
+                    categoryPercentage: wide,
+                    barPercentage: wide
                 },
                 {
                     data: Q,
                     label: "Supply (Units)",
-                    backgroundColor: "#06D6A0",
-                    categoryPercentage: 1.0,
-                    barPercentage: 1
+                    backgroundColor: "#118AB2",
+                    categoryPercentage: wide,
+                    barPercentage: wide
                 },
                 {
                     data: B,
                     label: "Backorders (Units)",
                     backgroundColor: "#EF476F",
-                    categoryPercentage: 1.0,
-                    barPercentage: 1
+                    type: "line",
+                    pointRadius:0
                 },
                 {
                     data: I,
@@ -75,6 +76,7 @@ function drawChart() {
             },
         }
     });
+    barChart.update();
 }
 
 let tog;
@@ -98,7 +100,7 @@ function hideChart() {
         if (!hide) {
             chartc.style.maxHeight="0"
         } else {
-            chartc.style.maxHeight="500px"
+            chartc.style.maxHeight="550px"
         }
     }
 }
