@@ -153,27 +153,27 @@ function report(result) {
     header.className="list-group-item";
 
     let mu = document.createElement("li");
-    mu.innerHTML = `Daily Demand Mean (μ): ${result.mu}\n`;
+    mu.innerHTML = `Daily Demand Mean (μ): ${result.mu.toFixed(3)} units\n`;
     mu.className="list-group-item";
 
     let std = document.createElement("li");
-    std.innerHTML = `Daily Demand Standard Dev (σ): ${result.std}\n`;
+    std.innerHTML = `Daily Demand Standard Dev (σ): ${result.std.toFixed(3)} units\n`;
     std.className="list-group-item";
 
     let kyu = document.createElement("li");
-    kyu.innerHTML = `Optimal Order Qty (Q): ${result.kyu}\n`;
+    kyu.innerHTML = `Optimal Order Qty (Q): ${result.kyu.toFixed(0)} units\n`;
     kyu.className="list-group-item";
 
     let r = document.createElement("li");
-    r.innerHTML = `Optimal Reorder Point (r): ${result.r}\n`;
+    r.innerHTML = `Optimal Reorder Point (r): ${result.r.toFixed(0)} units\n`;
     r.className="list-group-item";
 
     let c = document.createElement("li");
-    c.innerHTML = `Optimal Total Cost (c): ${result.c}\n`;
+    c.innerHTML = `Optimal Daily Total Cost (c): $${result.c.toFixed(2)}\n`;
     c.className="list-group-item";
 
     let f = document.createElement("p");
-    f.innerHTML = `Optimal Fill Rate (f): ${result.f}%\n`;
+    f.innerHTML = `Optimal Fill Rate (f): ${result.f.toFixed(2)}%\n`;
     f.className="list-group-item";
 
     let wrapper=document.createElement("ul");
@@ -258,7 +258,7 @@ function report(result) {
 function getCumulative(cost_list) {
     cumulative_cost = [];
     for (var i = 0; i < cost_list.length; i++) {
-        if (i == 0) cumulative_cost.push(parseFloat(cost_list[i]));
+        if (i === 0) cumulative_cost.push(parseFloat(cost_list[i]));
         else cumulative_cost.push(parseFloat(cumulative_cost[i-1]) + parseFloat(cost_list[i]));
     }
     return cumulative_cost
